@@ -34,11 +34,28 @@ const errorRequestEmulation$ = new Observable((observer) => {
 });
 
 userActionEmulation$
-  .pipe
-  // YOUR CODE STARTS HERE
-
-  // YOUR CODE ENDS HERE
-  ()
+  .pipe(
+    // YOUR CODE STARTS HERE
+    distinctUntilChanged((prev, curr) => prev.value === curr.value),
+    switchMap(value =>
+      forkJoin({
+        value: of(value).pipe(
+          pluck("value"),
+          map((e) => `Value - ${e}`)
+        ),
+        success: sucessRequestEmulation$.pipe(
+          pluck("value"),
+          map((e) => `Response - ${e}`)
+        ),
+        error: errorRequestEmulation$.pipe(
+          catchError((e) => of(e)),
+          pluck("error"),
+          map((e) => `Error - ${e}`)
+        ),
+      }).pipe(map(e => `${e.value}; ${e.success}; ${e.error}`))
+    )
+    // YOUR CODE ENDS HERE
+  )
   .subscribe({
     next: (result) => console.log(result),
     error: (err) => {
