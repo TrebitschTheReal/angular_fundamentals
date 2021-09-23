@@ -1,1 +1,5 @@
-<p>info works!</p>
+<div class="infobox">
+    <p class="infobox-heading">{{ infoBoxHeading }}</p>
+    <p class="infobox-content">{{ infoBoxContent }}</p>
+    <ng-content select="[addNewCourseInfoButton]"></ng-content>
+</div>

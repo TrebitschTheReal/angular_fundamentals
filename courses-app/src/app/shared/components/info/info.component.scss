@@ -1,0 +1,13 @@
+.infobox {
+    text-align: center;
+    width: 23.1rem;
+
+    &-heading {
+        font-weight: bold;
+        font-size: 1.6rem;
+    }
+
+    &-content {
+        font-size: 1.2rem;
+    }
+}
