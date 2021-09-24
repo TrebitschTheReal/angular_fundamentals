@@ -1,4 +1,4 @@
-<div class="courses-container">
+<section class="courses-container">
   <app-header>
     <span userNameHeader>{{'Dave'}}</span>
     <app-button headerLogoutButton [buttonText]="'Logout'" [buttonIcon]="'fa fa-sign-out'"></app-button>
@@ -7,4 +7,5 @@
     [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'">
     <app-button addNewCourseInfoButton [buttonText]="'Add new course'"></app-button>
   </app-info>
-</div>
+  <app-course-list [courses]="courses"></app-course-list>
+</section>
