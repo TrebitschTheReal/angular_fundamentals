@@ -1,3 +1,9 @@
-<app-course-card *ngFor="let course of courses"
-[courseElement]="course"
-></app-course-card>
+<app-course-card *ngFor="let course of courses; index as i" [courseElement]="course">
+  <ng-container courseCardActionButtons>
+    <app-button (click)="onCourseCardActionButtonClicked('show')" [buttonText]="'Show course'"></app-button>
+    <ng-container *ngIf="i % 2 === 0">
+      <app-button *ngFor="let button of courseCardActionButtons" (click)="onCourseCardActionButtonClicked(button.type)"
+        [buttonText]="button.buttonText" [buttonIcon]="button.buttonIcon"></app-button>
+    </ng-container>
+  </ng-container>
+</app-course-card>

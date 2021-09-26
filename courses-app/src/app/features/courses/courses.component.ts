@@ -18,4 +18,8 @@ export class CoursesComponent implements OnInit {
       console.log(this.courses)
     });
   }
+
+  actionButtonClicked(actionType: string) {
+    console.log(`Report from courses.component: ${actionType} clicked!`)
+  }
 }

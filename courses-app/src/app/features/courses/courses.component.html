@@ -7,5 +7,6 @@
     [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'">
     <app-button addNewCourseInfoButton [buttonText]="'Add new course'"></app-button>
   </app-info>
-  <app-course-list [courses]="courses"></app-course-list>
+  <app-course-list [courses]="courses"
+                    (courseCardActionButtonClicked)="actionButtonClicked($event)"></app-course-list>
 </section>

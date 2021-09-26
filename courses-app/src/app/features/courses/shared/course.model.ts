@@ -6,43 +6,39 @@
  */
 
 export interface ICourse {
-    name: string;
+    title: string;
     description: string;
-    editable: boolean;
-    author: string[];
-    duration: string;
-    created: string;
+    authors: string[];
+    duration: number;
+    creationDate: Date;
 }
 
 export class Course implements ICourse {
-    private _name: string;
+    private _title: string;
     private _description: string;
-    private _editable: boolean;
-    private _author: string[];
-    private _duration: string;
-    private _created: string;
+    private _authors: string[];
+    private _duration: number;
+    private _creationDate: Date;
 
     constructor(
-        name: string,
+        title: string,
         description: string,
-        editable: boolean,
-        author: string[],
-        duration: string,
-        created: string
+        authors: string[],
+        duration: number,
+        creationDate: Date
     ) {
-        this._name = name;
+        this._title = title;
         this._description = description;
-        this._editable = editable;
-        this._author = author;
+        this._authors = authors;
         this._duration = duration;
-        this._created = created;
+        this._creationDate = creationDate;
     }
 
-    public get name(): string {
-        return this._name;
+    public get title(): string {
+        return this._title;
     }
-    public set name(value: string) {
-        this._name = value;
+    public set title(value: string) {
+        this._title = value;
     }
 
     public get description(): string {
@@ -52,31 +48,24 @@ export class Course implements ICourse {
         this._description = value;
     }
 
-    public get editable(): boolean {
-        return this._editable;
+    public get authors(): string[] {
+        return this._authors;
     }
-    public set editable(value: boolean) {
-        this._editable = value;
-    }
-
-    public get author(): string[] {
-        return this._author;
-    }
-    public set author(value: string[]) {
-        this._author = value;
+    public set authors(value: string[]) {
+        this._authors = value;
     }
 
-    public get duration(): string {
+    public get duration(): number {
         return this._duration;
     }
-    public set duration(value: string) {
+    public set duration(value: number) {
         this._duration = value;
     }
 
-    public get created(): string {
-        return this._created;
+    public get creationDate(): Date {
+        return this._creationDate;
     }
-    public set created(value: string) {
-        this._created = value;
+    public set creationDate(value: Date) {
+        this._creationDate = value;
     }
 }

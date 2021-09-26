@@ -1,0 +1,16 @@
+<div class="course-card">
+  <div class="course-card-text">
+    <p class="course-card-text-heading">{{ courseElement.title }}</p>
+    <p class="course-card-text-description">{{ courseElement.description }}</p>
+  </div>
+  <div class="course-card-data">
+    <p class="course-card-data-author">Authors:<span
+        class="course-card-data-author-content">{{ courseElement.authors }}</span></p>
+    <p class="course-card-data-duration">Duration:<span
+        class="course-card-data-duration-content">{{ courseElement.duration | minutes }}</span></p>
+    <p class="course-card-data-created">Created:<span
+        class="course-card-data-created-content">{{ courseElement.creationDate | date: 'dd.mm.YYYY' }}</span></p>
+    <div class="course-card-cockpit">
+      <ng-content select="[courseCardActionButtons]"></ng-content>
+    </div>
+  </div>

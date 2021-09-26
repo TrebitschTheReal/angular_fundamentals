@@ -2,14 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { SearchComponent, InfoComponent, ButtonComponent, HeaderComponent } from './components/';
+import {
+  SearchComponent,
+  InfoComponent,
+  ButtonComponent,
+  HeaderComponent,
+  MinutesPipe
+} from './';
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
-  HeaderComponent,
-  ButtonComponent,
+  SearchComponent,
   InfoComponent,
-  SearchComponent
+  ButtonComponent,
+  HeaderComponent,
+  MinutesPipe
 ]
 @NgModule({
   declarations: components,
