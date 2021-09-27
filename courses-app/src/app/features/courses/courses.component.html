@@ -1,12 +1,9 @@
 <section class="courses-container">
-  <app-header>
-    <span userNameHeader>{{'Dave'}}</span>
-    <app-button headerLogoutButton [buttonText]="'Logout'" [buttonIcon]="'fa fa-sign-out'"></app-button>
-  </app-header>
-  <app-info [infoBoxHeading]="'Your list is empty'"
-    [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'">
-    <app-button addNewCourseInfoButton [buttonText]="'Add new course'"></app-button>
+  <app-info [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"
+            [infoBoxHeading]="'Your list is empty'"
+            class="info-box">
+    <app-button [buttonText]="'Add new course'" addNewCourseInfoButton></app-button>
   </app-info>
-  <app-course-list [courses]="courses"
-                    (courseCardActionButtonClicked)="actionButtonClicked($event)"></app-course-list>
+  <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
+                   [courses]="courses"></app-course-list>
 </section>

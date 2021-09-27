@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { Course } from '../shared/course.model';
-import { CourseService } from '../shared/course.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Course} from '../shared/course.model';
 
 @Component({
   selector: 'app-course-card',
@@ -10,9 +9,10 @@ import { CourseService } from '../shared/course.service';
 export class CourseCardComponent implements OnInit {
 
   @Input()
-  public courseElement: Course = new Course('John Doe', 'desc', ['Someone', 'Another Someone'], 3232, new Date());
+  public courseElement: Course = new Course();
 
-  constructor(private courseService: CourseService) { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-info',
@@ -13,8 +13,11 @@ export class InfoComponent implements OnInit {
   @Input()
   public infoBoxContent: string = '';
 
+  @Input()
+  public infoBoxBoldContent: string = '';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

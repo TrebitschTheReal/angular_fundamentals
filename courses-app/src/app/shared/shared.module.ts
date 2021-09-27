@@ -1,14 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
-import {
-  SearchComponent,
-  InfoComponent,
-  ButtonComponent,
-  HeaderComponent,
-  MinutesPipe
-} from './';
+import {ButtonComponent, HeaderComponent, InfoComponent, MinutesPipe, SearchComponent} from './';
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -18,6 +12,7 @@ const components: any[] = [
   HeaderComponent,
   MinutesPipe
 ]
+
 @NgModule({
   declarations: components,
   imports: [
@@ -26,4 +21,5 @@ const components: any[] = [
   ],
   exports: components
 })
-export class SharedModule { }
+export class SharedModule {
+}

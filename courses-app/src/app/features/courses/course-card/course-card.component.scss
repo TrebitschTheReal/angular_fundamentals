@@ -1,61 +1,51 @@
 .course-card {
-  display: flex;
-  align-content: space-between;
   border: 2px solid lightgreen;
-  padding: 2rem;
-  margin: 2rem;
+  padding: 1.6rem;
+  margin: 1.5rem;
   text-align: justify;
 
-  &-text {
-    margin-right: auto;
-    padding-right: 1rem;
-    max-width: 50vw;
+  .course-card-inner {
+    display: flex;
+    align-content: space-between;
 
+    &-text {
+      margin-right: auto;
+      padding-right: 1rem;
+      max-width: 60%;
 
-    &-heading {
-      font-size: 2rem;
-      font-weight: bold;
-    }
+      &-heading {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
 
-    &-description {
-      font-size: 1rem;
-    }
-  }
-
-  &-data {
-    margin-left: auto;
-    padding-left: 1rem;
-    font-size: 1.35rem;
-
-    &-author {
-      font-weight: bold;
-
-      &-content {
-        font-weight: normal;
-        margin-left: 1rem;
+      &-description {
+        font-size: 1rem;
       }
     }
 
-    &-duration {
-      font-weight: bold;
+    &-data {
+      display: flex;
+      justify-content: space-between;
 
-      &-content {
-        font-weight: normal;
-        margin-left: 1rem;
+      margin-left: auto;
+      padding-left: 1rem;
+
+      &-titles p {
+        font-weight: bold;
+        font-size: 1.2rem;
       }
-    }
-
-    &-created {
-      font-weight: bold;
 
       &-content {
-        font-weight: normal;
+        line-height: 1.82rem;
         margin-left: 1rem;
+        font-weight: normal;
+        font-size: 1rem;
       }
     }
   }
 
   &-cockpit {
-    text-align: center;
+    text-align: right;
   }
 }
+

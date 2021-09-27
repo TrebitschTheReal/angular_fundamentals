@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { SharedModule } from 'src/app/shared/shared.module';
-import { CourseModule } from '../course/course.module';
+import {SharedModule} from 'src/app/shared/shared.module';
+import {CourseModule} from '../course/course.module';
 
-import { CourseCardComponent } from './course-card/course-card.component';
-import { CoursesComponent } from './courses.component';
-import { CourseListComponent } from './course-list/course-list.component';
-
+import {CourseCardComponent} from './course-card/course-card.component';
+import {CoursesComponent} from './courses.component';
+import {CourseListComponent} from './course-list/course-list.component';
 
 
 @NgModule({
@@ -27,4 +26,5 @@ import { CourseListComponent } from './course-list/course-list.component';
     CourseCardComponent
   ]
 })
-export class CoursesModule { }
+export class CoursesModule {
+}

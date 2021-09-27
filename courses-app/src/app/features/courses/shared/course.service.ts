@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Course } from './course.model';
-import { COURSES } from './mock-courses';
-import { COURSE_LIST_ACTION_BUTTONS } from './mock-courses';
+import {Injectable} from '@angular/core';
+import {Course} from './course.model';
+import {COURSE_LIST_ACTION_BUTTONS, COURSES} from './mock-courses';
 
 
 @Injectable({
@@ -9,7 +8,8 @@ import { COURSE_LIST_ACTION_BUTTONS } from './mock-courses';
 })
 export class CourseService {
 
-  constructor() { }
+  constructor() {
+  }
 
   getCourses(): Promise<Course[]> {
     return Promise.resolve(COURSES)

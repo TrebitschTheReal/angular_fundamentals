@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ICourseCardActionButton } from '../shared/course-card-action-buttons-model';
-import { Course } from '../shared/course.model';
-import { CourseService } from '../shared/course.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ICourseCardActionButton} from '../shared/course-card-action-buttons-model';
+import {Course} from '../shared/course.model';
+import {CourseService} from '../shared/course.service';
 
 @Component({
   selector: 'app-course-list',
@@ -17,11 +17,12 @@ export class CourseListComponent implements OnInit {
   public editabe: boolean = false;
 
   @Output()
-  courseCardActionButtonClicked: EventEmitter<string> = new EventEmitter();
+  courseCardActionButtonClicked: EventEmitter<{ actionType: string, course: Course }> = new EventEmitter();
 
   public courseCardActionButtons: ICourseCardActionButton[] = [];
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService) {
+  }
 
   ngOnInit(): void {
     this.courseService.getCourseCardActionButtons().then((courseCardActionButtons: ICourseCardActionButton[]) => {
@@ -29,7 +30,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  onCourseCardActionButtonClicked(buttonEventType: string): void {
-    this.courseCardActionButtonClicked.emit(buttonEventType)
+  onCourseCardActionButtonClicked(buttonEventType: string, course: Course): void {
+    this.courseCardActionButtonClicked.emit({actionType: buttonEventType, course: course})
   }
 }
