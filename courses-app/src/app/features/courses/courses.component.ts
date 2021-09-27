@@ -9,6 +9,7 @@ import {CourseService} from './shared/course.service';
 })
 export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
+  public somethingHappened: boolean = true;
 
   constructor(private courseService: CourseService) {
   }
@@ -20,6 +21,17 @@ export class CoursesComponent implements OnInit {
   }
 
   actionButtonClicked(courseClickEventData: { actionType: string, course: Course }) {
+    courseClickEventData.actionType === 'delete' ? this.somethingHappened = true : null;
     console.log(`Report from courses.component: #id ${courseClickEventData.course.id} clicked! Click type: ${courseClickEventData.actionType}`)
+  }
+
+  modalClicked(isModalConfirmed: boolean) {
+    this.somethingHappened = false;
+
+    if (isModalConfirmed) {
+      console.log('starting the operation')
+    } else {
+      console.log('do nothing')
+    }
   }
 }

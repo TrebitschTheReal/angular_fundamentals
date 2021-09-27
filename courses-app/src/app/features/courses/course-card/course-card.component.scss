@@ -2,44 +2,34 @@
   border: 2px solid lightgreen;
   padding: 1.6rem;
   margin: 1.5rem;
-  text-align: justify;
 
   .course-card-inner {
-    display: flex;
-    align-content: space-between;
+    font-size: 0.94rem;
+    font-weight: bold;
 
     &-text {
-      margin-right: auto;
-      padding-right: 1rem;
-      max-width: 60%;
+      text-align: justify;
 
       &-heading {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
       }
 
       &-description {
-        font-size: 1rem;
+        font-weight: normal;
       }
     }
 
     &-data {
-      display: flex;
-      justify-content: space-between;
-
       margin-left: auto;
-      padding-left: 1rem;
 
       &-titles p {
+        font-size: 1rem;
         font-weight: bold;
-        font-size: 1.2rem;
       }
 
       &-content {
-        line-height: 1.82rem;
-        margin-left: 1rem;
         font-weight: normal;
-        font-size: 1rem;
       }
     }
   }

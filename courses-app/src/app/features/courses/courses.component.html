@@ -6,4 +6,11 @@
   </app-info>
   <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
                    [courses]="courses"></app-course-list>
+  <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
+                     *ngIf="somethingHappened"
+                     [cancelButtonText]="'CANCEL'"
+                     [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
+                     [okButtonText]="'OK'"
+                     [title]="'Are you sure?'"
+  ></app-confirm-modal>
 </section>
