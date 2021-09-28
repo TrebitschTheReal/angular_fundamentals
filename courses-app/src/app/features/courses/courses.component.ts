@@ -9,7 +9,7 @@ import {CourseService} from './shared/course.service';
 })
 export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
-  public somethingHappened: boolean = true;
+  public somethingHappened: boolean = false;
 
   constructor(private courseService: CourseService) {
   }

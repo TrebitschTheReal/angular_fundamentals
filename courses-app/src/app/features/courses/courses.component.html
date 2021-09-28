@@ -4,6 +4,10 @@
             class="info-box">
     <app-button [buttonText]="'Add new course'" addNewCourseInfoButton></app-button>
   </app-info>
+  <app-info [infoBoxContent]="'Try to delete one of the courses, also please watch the console too!'"
+            [infoBoxHeading]="'How to try out the modal?'"
+            class="info-box">
+  </app-info>
   <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
                    [courses]="courses"></app-course-list>
   <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
