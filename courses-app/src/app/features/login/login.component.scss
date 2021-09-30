@@ -1,0 +1,69 @@
+.login-container {
+  border: 2px solid lightblue;
+  padding: 1.6rem;
+  margin: 1.5rem;
+
+  &-box {
+    &-title {
+      font-weight: bold;
+      font-size: 1.6rem;
+    }
+
+    &-form {
+      max-width: 17rem;
+      text-align: left;
+
+      div {
+        margin-bottom: 1rem;
+      }
+
+      &-input-error {
+        margin: 0
+      }
+
+      label {
+        display: block;
+      }
+
+      input {
+        outline: none;
+        width: 100%;
+        height: 2rem;
+        font-size: 15px;
+        padding-left: 0.6rem;
+        color: #111111;
+      }
+
+      input::-webkit-input-placeholder {
+        font-size: 19px;
+        color: #808080;
+      }
+
+      &-button-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    &-bottom {
+      margin-top: 1rem;
+
+      &-text {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.error {
+  color: red;
+
+  input {
+    border: 1px solid red;
+  }
+
+  input:focus {
+    background: #FFCCCC
+  }
+}
