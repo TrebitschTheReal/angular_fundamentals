@@ -8,9 +8,11 @@
       justify-content: space-between;
 
       &-input {
+        outline: none;
         width: 80%;
         font-size: 1.4rem;
         padding-left: 1rem;
+        border: 1px solid darkorange;
       }
     }
   }
