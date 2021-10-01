@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {NgForm, NgModelGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,9 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginForm')
   public loginForm: NgForm | undefined;
 
+  @ViewChild('loginData')
+  public loginData: NgModelGroup | undefined;
+
   constructor() {
   }
 
@@ -19,8 +22,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log('Form submitted: ', this.loginForm)
-    console.log('Email errors: ', this.loginForm?.form.controls.email.errors)
-    console.log('Password errors: ', this.loginForm?.form.controls.password.errors)
+    console.log('Email errors: ', this.loginData?.control.controls)
   }
 
 }

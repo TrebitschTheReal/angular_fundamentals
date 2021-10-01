@@ -4,48 +4,53 @@
     <form #loginForm="ngForm"
           (ngSubmit)="onSubmit()"
           class="mx-auto login-container-box-form">
-      <div [ngClass]="{'error': email.errors && email.touched}"
-           class="login-container-box-form-email">
-        <label class="login-container-box-form-email-label"
-               for="email">Email</label>
-        <input #email="ngModel"
-               appEmailValidator
-               class="login-container-box-form-email-input"
-               id="email"
-               name="email"
-               ngModel
-               required
-               type="email">
-        <p *ngIf="email.errors?.required && email.touched"
-           class="login-container-box-form-input-error">Email is
-          required!</p>
-        <p *ngIf="email.errors?.forbiddenEmail && email.touched"
-           class="login-container-box-form-input-error">Email is
-          forbidden!</p>
+      <div #loginData="ngModelGroup"
+           id="login-data"
+           ngModelGroup="loginData">
+        <div [ngClass]="{'error': email.errors && email.touched}"
+             class="login-container-box-form-email">
+          <label class="login-container-box-form-email-label"
+                 for="email">Email</label>
+          <input #email="ngModel"
+                 appEmailValidator
+                 class="login-container-box-form-email-input"
+                 id="email"
+                 name="email"
+                 ngModel
+                 required
+                 type="email">
+          <p *ngIf="email.errors?.required && email.touched"
+             class="login-container-box-form-input-error">Email is
+            required!</p>
+          <p *ngIf="email.errors?.forbiddenEmail && email.touched"
+             class="login-container-box-form-input-error">Email is
+            forbidden!</p>
+        </div>
+        <div [ngClass]="{'error': password.errors && password.touched}"
+             class="login-container-box-form-password">
+          <label class="login-container-box-form-password-label"
+                 for="login-password">Password</label>
+          <input #password="ngModel"
+                 class="login-container-box-form-password-input"
+                 id="login-password"
+                 name="password"
+                 ngModel
+                 required
+                 type="password">
+          <p *ngIf="password.errors?.required && password.touched" class="login-container-box-form-input-error">
+            Password
+            is required!</p>
+        </div>
+        <div class="login-container-box-form-button-container">
+          <app-button *ngIf="loginData.valid; else dummySubmitButton"
+                      [buttonText]="'Login'"
+                      [buttonType]="'submit'"></app-button>
+          <ng-template #dummySubmitButton>
+            <app-button [buttonText]="'Login'" [disabled]="true"></app-button>
+          </ng-template>
+        </div>
       </div>
-      <div [ngClass]="{'error': password.errors && password.touched}"
-           class="login-container-box-form-password">
-        <label class="login-container-box-form-password-label"
-               for="login-password">Password</label>
-        <input #password="ngModel"
-               class="login-container-box-form-password-input"
-               id="login-password"
-               name="password"
-               ngModel
-               required
-               type="password">
-        <p *ngIf="password.errors?.required && password.touched" class="login-container-box-form-input-error">
-          Password
-          is required!</p>
-      </div>
-      <div class="login-container-box-form-button-container">
-        <app-button *ngIf="loginForm.invalid === false; else dummySubmitButton"
-                    [buttonText]="'Login'"
-                    [buttonType]="'submit'"></app-button>
-        <ng-template #dummySubmitButton>
-          <app-button [buttonText]="'Login'" [disabled]="true"></app-button>
-        </ng-template>
-      </div>
+
     </form>
     <div class="login-container-box-bottom">
       <p class="login-container-box-bottom-text">If you don't have an account you can register at</p>
