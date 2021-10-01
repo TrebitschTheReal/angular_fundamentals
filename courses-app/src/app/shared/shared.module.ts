@@ -2,8 +2,17 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
-import {ButtonComponent, ConfirmModalComponent, HeaderComponent, InfoComponent, MinutesPipe, SearchComponent} from './';
-import {EmailValidatorDirective} from "./directives/email-validator.directive";
+import {
+  ButtonComponent,
+  ConfirmModalComponent,
+  EmailValidatorDirective,
+  HeaderComponent,
+  InfoComponent,
+  MinutesPipe,
+  PasswordEyeComponent,
+  SearchComponent,
+  TogglePasswordDirective
+} from './';
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -13,7 +22,9 @@ const components: any[] = [
   HeaderComponent,
   ConfirmModalComponent,
   MinutesPipe,
-  EmailValidatorDirective
+  EmailValidatorDirective,
+  TogglePasswordDirective,
+  PasswordEyeComponent
 ]
 
 @NgModule({

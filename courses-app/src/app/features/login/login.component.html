@@ -30,13 +30,18 @@
              class="login-container-box-form-password">
           <label class="login-container-box-form-password-label"
                  for="login-password">Password</label>
-          <input #password="ngModel"
+          <input #appTogglePassword="togglePassword"
+                 #password="ngModel"
+                 appTogglePassword
                  class="login-container-box-form-password-input"
                  id="login-password"
                  name="password"
                  ngModel
                  required
                  type="password">
+          <app-password-eye (click)="appTogglePassword.toggleInputText()"
+                            [isShown]="appTogglePassword.isShown"
+          ></app-password-eye>
           <p *ngIf="password.errors?.required && password.touched" class="login-container-box-form-input-error">
             Password
             is required!</p>
