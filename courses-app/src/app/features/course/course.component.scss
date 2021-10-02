@@ -1,0 +1,91 @@
+.course-edit-container {
+  border: 2px solid lightblue;
+  padding: 1.6rem;
+
+  &-form {
+    div:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      margin-bottom: 0.3rem;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0;
+    }
+
+    input,
+    textarea {
+      min-height: 2.2rem;
+      width: 100%;
+      resize: none;
+      outline: none;
+      font-size: 16px;
+      padding-left: 1rem;
+      border: 1px solid var(--orange);
+    }
+
+    &-title-box {
+      display: flex;
+      justify-content: space-between;
+
+      input {
+        width: 80%;
+      }
+    }
+
+    &-desc-box {
+      textarea {
+        height: 20rem;
+      }
+    }
+
+    &-other {
+      p {
+        font-weight: bold;
+        font-size: 21px;
+        text-align: center;
+        margin-bottom: 0.8rem;
+      }
+
+      p:not(:first-child) {
+        margin-top: 2rem;
+      }
+
+      display: flex;
+      justify-content: space-between;
+
+      border: 2px solid lightgrey;
+      padding: 1.6rem;
+
+      &-left_side {
+        width: 100%;
+
+        &-duration-display {
+          margin-top: 2rem;
+
+          p {
+            font-weight: normal;
+            text-align: left;
+          }
+        }
+      }
+
+      &-right_side {
+        text-align: center;
+        width: 100%;
+
+        &-author_list_box {
+          &-element {
+            span {
+              margin-left: 5rem;
+            }
+
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}

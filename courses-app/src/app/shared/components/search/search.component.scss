@@ -1,4 +1,9 @@
 .search-container {
+  border: 2px solid lightblue;
+  padding: 1.6rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+
   &-box {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -10,9 +15,9 @@
       &-input {
         outline: none;
         width: 80%;
-        font-size: 1.4rem;
+        font-size: 16px;
         padding-left: 1rem;
-        border: 1px solid darkorange;
+        border: 1px solid var(--orange);
       }
     }
   }

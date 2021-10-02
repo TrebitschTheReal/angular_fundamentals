@@ -1,1 +1,59 @@
-<p>course works!</p>
+<div class="course-edit-container">
+  <form (ngSubmit)="onSubmit()"
+        [formGroup]="courseForm"
+        class="course-edit-container-form">
+    <div formGroupName="courseData">
+      <label for="title">Title</label>
+      <div class="course-edit-container-form-title-box">
+        <input formControlName="title"
+               id="title"
+               name="title"
+               type="text">
+        <app-button
+          [buttonText]="'Create course'"
+          [buttonType]="'submit'"
+        ></app-button>
+      </div>
+      <label for="title">Description</label>
+      <div class="course-edit-container-form-desc-box">
+        <textarea formControlName="desc"
+                  id="desc"
+                  name="desc"
+                  type="textarea"></textarea>
+      </div>
+      <div class="course-edit-container-form-other">
+        <div class="course-edit-container-form-other-left_side">
+          <p>Add authors</p>
+          <label for="title">Author name</label>
+          <div class="course-edit-container-form-other-left_side-author-box">
+            <input formControlName="authorName"
+                   id="authorName"
+                   name="authorName"
+                   type="text">
+          </div>
+          <app-button [buttonText]="'Create author'"></app-button>
+          <p>Duration</p>
+          <label for="title">Author name</label>
+          <div class="course-edit-container-form-other-left_side-duration-box">
+            <input formControlName="duration"
+                   id="duration"
+                   name="duration"
+                   type="text">
+          </div>
+          <div class="course-edit-container-form-other-left_side-duration-display">
+            <p>Duration:</p>
+          </div>
+        </div>
+        <div class="course-edit-container-form-other-right_side">
+          <p>Authors list</p>
+          <div class="course-edit-container-form-other-right_side-author_list_box">
+            <div class="course-edit-container-form-other-right_side-author_list_box-element">
+              <span class="">Foo One</span>
+              <app-button [buttonText]="'Delete author'"></app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
