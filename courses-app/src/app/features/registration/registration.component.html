@@ -17,11 +17,11 @@
                  type="text">
           <p *ngIf="registrationForm.get('registrationData.name')?.touched &&
           this.registrationForm.get('registrationData.name')?.errors?.required"
-             class="registration-container-box-form-input-error">Name is
+             class="error-input-error">Name is
             required!</p>
           <p *ngIf="registrationForm.get('registrationData.name')?.touched &&
           this.registrationForm.get('registrationData.name')?.errors?.minlength"
-             class="registration-container-box-form-input-error">Name is
+             class="error-input-error">Name is
             invalid!</p>
         </div>
         <div [ngClass]="{'error': this.registrationForm.get('registrationData.email')?.errors &&
@@ -35,11 +35,11 @@
                  type="email">
           <p *ngIf="registrationForm.get('registrationData.email')?.touched &&
           this.registrationForm.get('registrationData.email')?.errors?.required"
-             class="registration-container-box-form-input-error">Email is
+             class="error-input-error">Email is
             required!</p>
           <p *ngIf="registrationForm.get('registrationData.email')?.touched &&
           this.registrationForm.get('registrationData.email')?.errors?.forbiddenEmail"
-             class="registration-container-box-form-input-error">Email is
+             class="error-input-error">Email is
             invalid!</p>
         </div>
         <div [ngClass]="{'error': this.registrationForm.get('registrationData.password')?.errors &&

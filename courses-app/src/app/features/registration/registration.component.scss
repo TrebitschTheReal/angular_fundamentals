@@ -17,10 +17,6 @@
         margin-bottom: 1rem;
       }
 
-      &-input-error {
-        margin: 0
-      }
-
       label {
         display: block;
       }
@@ -56,14 +52,3 @@
   }
 }
 
-.error {
-  color: red;
-
-  input {
-    border: 1px solid red;
-  }
-
-  input:focus {
-    background: #FFCCCC
-  }
-}

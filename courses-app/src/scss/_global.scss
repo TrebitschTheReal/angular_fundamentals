@@ -8,3 +8,22 @@
 i {
   font-style: normal;
 }
+
+.error {
+  color: var(--danger);
+
+  input,
+  textarea {
+    border: 1px solid var(--danger);
+  }
+
+  input:focus,
+  textarea:focus {
+    background: #FFCCCC
+  }
+
+  &-input-error {
+    display: block;
+    margin: 0;
+  }
+}

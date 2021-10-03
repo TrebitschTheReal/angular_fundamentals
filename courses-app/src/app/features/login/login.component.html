@@ -20,10 +20,10 @@
                  required
                  type="email">
           <p *ngIf="email.errors?.required && email.touched"
-             class="login-container-box-form-input-error">Email is
+             class="error-input-error">Email is
             required!</p>
           <p *ngIf="email.errors?.forbiddenEmail && email.touched"
-             class="login-container-box-form-input-error">Email is
+             class="error-input-error">Email is
             forbidden!</p>
         </div>
         <div [ngClass]="{'error': password.errors && password.touched}"
@@ -42,7 +42,8 @@
           <app-password-eye (click)="appTogglePassword.toggleInputText()"
                             [isShown]="appTogglePassword.isShown"
           ></app-password-eye>
-          <p *ngIf="password.errors?.required && password.touched" class="login-container-box-form-input-error">
+          <p *ngIf="password.errors?.required && password.touched"
+             class="error-input-error">
             Password
             is required!</p>
         </div>

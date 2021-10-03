@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 import {
+  AuthorNameValidatorDirective,
   ButtonComponent,
   ConfirmModalComponent,
   EmailValidatorDirective,
@@ -24,6 +25,7 @@ const components: any[] = [
   ConfirmModalComponent,
   MinutesPipe,
   EmailValidatorDirective,
+  AuthorNameValidatorDirective,
   TogglePasswordDirective,
   PasswordEyeComponent
 ]

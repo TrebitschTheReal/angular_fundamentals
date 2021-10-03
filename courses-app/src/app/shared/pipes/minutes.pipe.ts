@@ -10,7 +10,10 @@ export class MinutesPipe implements PipeTransform {
     let minutes = (hours - rhours) * 60;
     let rminutes = Math.round(minutes);
 
-    return isNaN(rminutes) || isNaN(rhours) ? '00 : 00 hours' :
-      ((hours < 10 ? '0' + rhours : rhours) + " : " + (rminutes < 10 ? '0' + rminutes : rminutes) + " hours");
+    if ((isNaN(rminutes) || isNaN(rhours)) || ((rminutes < 0) || (rhours < 0))) {
+      return '00 : 00 hours'
+    }
+
+    return ((hours < 10 ? '0' + rhours : rhours) + " : " + (rminutes < 10 ? '0' + rminutes : rminutes) + " hours");
   }
 }
