@@ -40,7 +40,24 @@
       }
     }
 
-    &-other {
+    &-duration_box {
+      display: flex;
+      justify-content: space-between;
+
+      input {
+        width: 50%;
+      }
+
+      span {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: left;
+      }
+    }
+
+    &-authors {
+      margin-top: 3rem;
+
       p {
         font-weight: bold;
         font-size: 21px;
@@ -60,15 +77,6 @@
 
       &-left_side {
         width: 100%;
-
-        &-duration-display {
-          margin-top: 2rem;
-
-          p {
-            font-weight: normal;
-            text-align: left;
-          }
-        }
       }
 
       &-right_side {

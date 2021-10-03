@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-course',
@@ -20,9 +20,22 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.courseForm = new FormGroup({
+      'courseData': new FormGroup({
+        'title': new FormControl(null, Validators.required),
+        'desc': new FormControl(null, Validators.required),
+        'duration': new FormControl(null, [
+          Validators.required,
+          Validators.minLength(0)]),
+      }),
+      'newAuthor': new FormGroup({
+        'authorName': new FormControl([]),
+      })
+    })
   }
 
   onSubmit() {
+    console.log(this.courseForm)
 
   }
 
