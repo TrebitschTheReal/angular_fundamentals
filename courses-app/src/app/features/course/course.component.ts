@@ -29,8 +29,7 @@ export class CourseComponent implements OnInit {
   }
 
   onSubmit() {
-    this.initCourse();
-    console.log(this.courseForm)
+    console.log(this.courseForm);
   }
 
   addAuthor(): void {
@@ -48,7 +47,7 @@ export class CourseComponent implements OnInit {
   }
 
   removeAuthor(authorIndex: number) {
-    (<FormArray>this.courseForm.get('courseData.authors')).controls.splice(authorIndex, 1);
+    (<FormArray>this.courseForm.get('courseData.authors')).removeAt(authorIndex)
   }
 
   private initForm() {
