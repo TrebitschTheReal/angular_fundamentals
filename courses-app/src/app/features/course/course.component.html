@@ -61,7 +61,7 @@
         <div class="course-edit-container-form-authors-left_side">
           <p>Add authors</p>
           <div [ngClass]="{'error': courseForm.get('courseData.newAuthor')?.dirty &&
-          courseForm.get('courseData.newAuthor')?.errors && courseForm.get('courseData.newAuthor')?.value.length > 0}">
+          courseForm.get('courseData.newAuthor')?.errors && courseForm.get('courseData.newAuthor')?.value}">
             <label for="newAuthor">Author name</label>
             <div class="course-edit-container-form-authors-left_side-author-box">
               <input formControlName="newAuthor"
@@ -71,7 +71,7 @@
             </div>
             <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
           courseForm.get('courseData.newAuthor')?.errors?.forbiddenAuthorName &&
-           courseForm.get('courseData.newAuthor')?.value.length > 0"
+           courseForm.get('courseData.newAuthor')?.value"
                   class="error-input-error">Duration is
               invalid!</span>
             <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
@@ -82,9 +82,9 @@
           <app-button (click)="addAuthor()"
                       *ngIf="courseForm.get('courseData.newAuthor')?.valid &&
                       courseForm.get('courseData.newAuthor')?.value; else dummyButton"
-                      [buttonText]="'Create author'"></app-button>
+                      [buttonText]="'Add author'"></app-button>
           <ng-template #dummyButton>
-            <app-button [buttonText]="'Create author'" [disabled]="true"></app-button>
+            <app-button [buttonText]="'Add author'" [disabled]="true"></app-button>
           </ng-template>
         </div>
         <div class="course-edit-container-form-authors-right_side">
@@ -95,7 +95,7 @@
                  formArrayName="authors">
               <div [formGroupName]="i">
                 <span class="">{{author.value}}</span>
-                <app-button (click)="removeAuthor(i)" [buttonText]="'Delete author'"></app-button>
+                <app-button (click)="removeAuthor(i)" [buttonText]="'Remove author'"></app-button>
               </div>
             </div>
           </div>

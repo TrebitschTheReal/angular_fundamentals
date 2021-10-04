@@ -85,6 +85,11 @@
         width: 100%;
 
         &-author_list_box {
+          padding: 0.5rem;
+          overflow: scroll;
+          height: 10rem;
+          overflow-x: hidden;
+
           &-element {
             div {
               span {
