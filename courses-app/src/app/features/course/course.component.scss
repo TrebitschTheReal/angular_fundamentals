@@ -1,5 +1,5 @@
 .course-edit-container {
-  border: 2px solid lightblue;
+  border: 2px solid var(--light_blue);
   padding: 1.6rem;
 
   &-form {
@@ -22,7 +22,6 @@
       outline: none;
       font-size: 16px;
       padding-left: 1rem;
-      border: 1px solid var(--orange);
     }
 
     &-title-box {
@@ -73,7 +72,7 @@
       display: flex;
       justify-content: space-between;
 
-      border: 2px solid lightgrey;
+      border: 2px solid var(--gray);
       padding: 1.6rem;
 
       &-left_side {

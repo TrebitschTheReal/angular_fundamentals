@@ -1,5 +1,5 @@
 .search-container {
-  border: 2px solid lightblue;
+  border: 2px solid var(--light_blue);
   padding: 1.6rem;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -17,7 +17,6 @@
         width: 80%;
         font-size: 16px;
         padding-left: 1rem;
-        border: 1px solid var(--orange);
       }
     }
   }
