@@ -13,6 +13,7 @@ import {
   MinutesPipe,
   PasswordEyeComponent,
   SearchComponent,
+  StringJoinerPipe,
   TogglePasswordDirective
 } from './';
 import {FormsModule} from "@angular/forms";
@@ -26,6 +27,7 @@ const components: any[] = [
   ConfirmModalComponent,
   MinutesPipe,
   CreationDatePipe,
+  StringJoinerPipe,
   EmailValidatorDirective,
   AuthorNameValidatorDirective,
   TogglePasswordDirective,
