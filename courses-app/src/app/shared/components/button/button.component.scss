@@ -1,0 +1,30 @@
+.button-common {
+  color: black;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+
+  transition: 0.2s;
+  cursor: pointer;
+
+  border: 2px solid purple;
+
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.button-common:hover {
+  background-color: purple;
+  color: white;
+}
+
+.button-common:focus {
+  background-color: red;
+}
+
+.button-common:active {
+  background-color: darkmagenta;
+  color: white;
+}

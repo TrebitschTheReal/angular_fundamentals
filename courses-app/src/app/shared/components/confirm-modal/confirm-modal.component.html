@@ -1,0 +1,10 @@
+<div (click)="modalButtonClicked(false)" class="confirm-modal"></div>
+<div class="confirm-modal-body">
+  <i (click)="modalButtonClicked(false)" class="confirm-modal-body-close close fa fa-times"></i>
+  <p class="confirm-modal-body-heading">{{title}}</p>
+  <p class="confirm-modal-body-message">{{message}}</p>
+  <div class="confirm-modal-cockpit">
+    <app-button (click)="modalButtonClicked(true)" [buttonText]="okButtonText"></app-button>
+    <app-button (click)="modalButtonClicked(false)" [buttonText]="cancelButtonText"></app-button>
+  </div>
+</div>

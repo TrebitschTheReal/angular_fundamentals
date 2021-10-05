@@ -1,0 +1,41 @@
+.course-card {
+  border: 2px solid lightgreen;
+  padding: 1.6rem;
+  margin: 1.5rem;
+
+  .course-card-inner {
+    font-size: 0.94rem;
+    font-weight: bold;
+
+    &-text {
+      text-align: justify;
+
+      &-heading {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      &-description {
+        font-weight: normal;
+      }
+    }
+
+    &-data {
+      margin-left: auto;
+
+      &-titles p {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      &-content {
+        font-weight: normal;
+      }
+    }
+  }
+
+  &-cockpit {
+    text-align: right;
+  }
+}
+

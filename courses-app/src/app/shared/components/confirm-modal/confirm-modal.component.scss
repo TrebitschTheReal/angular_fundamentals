@@ -1,0 +1,57 @@
+.confirm-modal {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+
+  &-body {
+    box-shadow: 1rem 1rem 3rem black;
+
+    text-align: center;
+    background: white;
+    width: 45rem;
+    height: 25rem;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 1000;
+
+    &-heading {
+      margin-top: 5rem;
+      font-weight: bold;
+      font-size: 3rem;
+    }
+
+    &-message {
+      font-size: 1.3rem;
+    }
+
+    &-close {
+      transition: 0.1s;
+      margin: 1rem;
+      float: right;
+      font-size: 2.7rem;
+      cursor: pointer;
+    }
+
+    &-close:hover {
+      font-size: 3rem;
+    }
+  }
+
+  &-cockpit {
+    text-align: center;
+    margin-top: 4rem;
+
+    app-button {
+      margin-left: 2rem;
+    }
+  }
+
+}

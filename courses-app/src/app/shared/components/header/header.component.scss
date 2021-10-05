@@ -1,0 +1,42 @@
+header {
+  width: 100%;
+
+  .navbar {
+    background-color: lightgray;
+    padding-top: 2rem;
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+    padding-left: 4rem;
+
+    &-logo {
+      img {
+        vertical-align: middle;
+        margin-bottom: 1rem;
+        margin-right: 2rem;
+        width: 4rem;
+      }
+
+      &-text {
+        font-size: 35px;
+        text-decoration: none;
+        color: white;
+      }
+    }
+
+    &-menu {
+      margin-top: 9px;
+      display: inline;
+      float: right;
+      list-style-type: none;
+
+      &-element {
+        padding-top: 50px;
+        padding-bottom: 39px;
+        padding-left: 35px;
+        padding-right: 35px;
+        list-style: none;
+        display: inline;
+      }
+    }
+  }
+}
