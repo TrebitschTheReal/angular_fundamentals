@@ -22,9 +22,8 @@
           <p *ngIf="email.errors?.required && email.touched"
              class="error-input-error">Email is
             required!</p>
-          <p *ngIf="email.errors?.forbiddenEmail && email.touched"
-             class="error-input-error">Email is
-            forbidden!</p>
+          <p *ngIf="email.errors?.validEmail && email.touched"
+             class="error-input-error">{{email.errors?.validEmail}}</p>
         </div>
         <div [ngClass]="{'error': password.errors && password.touched}"
              class="login-container-box-form-password">

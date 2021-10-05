@@ -38,9 +38,8 @@
              class="error-input-error">Email is
             required!</p>
           <p *ngIf="registrationForm.get('registrationData.email')?.touched &&
-          this.registrationForm.get('registrationData.email')?.errors?.forbiddenEmail"
-             class="error-input-error">Email is
-            invalid!</p>
+          this.registrationForm.get('registrationData.email')?.errors"
+             class="error-input-error">{{this.registrationForm.get('registrationData.email')?.errors?.validEmail}}</p>
         </div>
         <div [ngClass]="{'error': this.registrationForm.get('registrationData.password')?.errors &&
              this.registrationForm.get('registrationData.password')?.touched}"

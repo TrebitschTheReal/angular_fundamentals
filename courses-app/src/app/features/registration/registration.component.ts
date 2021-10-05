@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {forbiddenEmailValidator} from "../../shared/validators/email-validation-logic";
+import {validEmailValidator} from "../../shared/validators/email-validation-logic";
 
 @Component({
   selector: 'app-registration',
@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
           [Validators.required,
             Validators.minLength(6)]),
         'email': new FormControl(null,
-          [Validators.required, forbiddenEmailValidator]),
+          [Validators.required, validEmailValidator(this.registrationForm)]),
         'password': new FormControl(null,
           [Validators.required])
       })
@@ -35,9 +35,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registrationForm.get('registrationData.name'))
-    console.log(this.registrationForm.get('registrationData.name')?.errors)
-    console.log(this.registrationForm.get('registrationData.email')?.errors)
-    console.log(this.registrationForm.get('registrationData.password')?.errors)
+    console.log(this.registrationForm.get('registrationData'));
   }
 }

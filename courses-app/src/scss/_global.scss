@@ -28,18 +28,22 @@ button {
 .error {
   color: var(--danger);
 
-  input,
-  textarea {
-    border: 1px solid var(--danger);
-  }
-
-  input:focus,
-  textarea:focus {
-    background: #FFCCCC
-  }
-
   &-input-error {
     display: block;
     margin: 0;
   }
+}
+
+p.ng-invalid.ng-touched {
+  color: var(--danger);
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid var(--danger);
+}
+
+input.ng-invalid.ng-touched:focus,
+textarea.ng-invalid.ng-touched:focus {
+  background: #FFCCCC;
 }

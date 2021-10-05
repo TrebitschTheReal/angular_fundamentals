@@ -1,6 +1,6 @@
 import {Directive} from '@angular/core';
 import {AbstractControl, NG_VALIDATORS, ValidationErrors, Validator} from "@angular/forms";
-import {forbiddenEmailValidator} from "../validators/email-validation-logic";
+import {validEmailValidator} from "../validators/email-validation-logic";
 
 @Directive({
   selector: '[appEmailValidator]',
@@ -12,6 +12,6 @@ import {forbiddenEmailValidator} from "../validators/email-validation-logic";
 })
 export class EmailValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
-    return forbiddenEmailValidator(control)
+    return validEmailValidator(control)(control);
   }
 }
