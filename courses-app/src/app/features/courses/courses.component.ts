@@ -36,6 +36,6 @@ export class CoursesComponent implements OnInit {
   }
 
   onSearchButtonClicked(searchSlug: string) {
-    console.log('search button clicked', searchSlug)
+    console.log('search button clicked! Filter:', searchSlug)
   }
 }
