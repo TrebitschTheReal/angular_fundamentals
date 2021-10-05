@@ -60,7 +60,7 @@ export class CourseComponent implements OnInit {
           Validators.min(1)]),
         'newAuthor': new FormControl('', [
           Validators.maxLength(35),
-          authorNameValidationLogic
+          authorNameValidationLogic(this.courseForm)
         ]),
         'authors': new FormArray([]),
       }),

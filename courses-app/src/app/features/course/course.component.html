@@ -70,14 +70,13 @@
                      type="text">
             </div>
             <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
-          courseForm.get('courseData.newAuthor')?.errors?.forbiddenAuthorName &&
+          courseForm.get('courseData.newAuthor')?.errors?.validAuthorName &&
            courseForm.get('courseData.newAuthor')?.value"
-                  class="error-input-error">Duration is
-              invalid!</span>
+                  class="error-input-error">{{courseForm.get('courseData.newAuthor')?.errors?.validAuthorName}}</span>
             <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
           courseForm.get('courseData.newAuthor')?.errors?.maxlength &&
            courseForm.get('courseData.newAuthor')?.value"
-                  class="error-input-error">Duration is too long!</span>
+                  class="error-input-error">Author name is too long!</span>
           </div>
           <app-button (click)="addAuthor()"
                       *ngIf="courseForm.get('courseData.newAuthor')?.valid &&
