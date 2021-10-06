@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from './shared/course.model';
 import {CourseService} from './shared/course.service';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-courses',
@@ -11,7 +12,7 @@ export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
   public somethingHappened: boolean = false;
 
-  constructor(private courseService: CourseService) {
+  constructor(private courseService: CourseService, public route: ActivatedRoute) {
   }
 
   ngOnInit(): void {

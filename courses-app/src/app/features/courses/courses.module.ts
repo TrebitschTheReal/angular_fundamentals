@@ -9,6 +9,7 @@ import {CoursesComponent} from './courses.component';
 import {CourseListComponent} from './course-list/course-list.component';
 import {LoginModule} from "../login/login.module";
 import {RegistrationModule} from "../registration/registration.module";
+import {AppRoutingModule} from "../../app-routing.module";
 
 
 @NgModule({
@@ -17,13 +18,14 @@ import {RegistrationModule} from "../registration/registration.module";
     CourseListComponent,
     CourseCardComponent
   ],
-    imports: [
-        SharedModule,
-        CommonModule,
-        CourseModule,
-        LoginModule,
-        RegistrationModule
-    ],
+  imports: [
+    SharedModule,
+    CommonModule,
+    CourseModule,
+    LoginModule,
+    RegistrationModule,
+    AppRoutingModule
+  ],
   exports: [
     CoursesComponent,
     CourseListComponent,

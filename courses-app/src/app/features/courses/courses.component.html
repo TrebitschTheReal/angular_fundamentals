@@ -1,22 +1,20 @@
-<app-search (searchButtonClicked)="onSearchButtonClicked($event)"
-            [placeholder]="'Type something'"
-></app-search>
-<app-course></app-course>
-<app-registration></app-registration>
-<app-login></app-login>
-
-
-<section class="courses-container">
-  <app-info [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"
-            [infoBoxHeading]="'Your list is empty'"
-            class="info-box">
-    <app-button [buttonText]="'Add new course'" addNewCourseInfoButton></app-button>
-  </app-info>
-  <app-info [infoBoxContent]="'Try to delete one of the courses, also please watch the console too!'"
-            [infoBoxHeading]="'How to try out the modal?'"
-            class="info-box">
-  </app-info>
+<section *ngIf="route.children.length === 0"
+         class="container">
+  <app-search (searchButtonClicked)="onSearchButtonClicked($event)"
+              [placeholder]="'Type something'"
+  ></app-search>
+  <ng-template #emptyInfo>
+    <app-info
+      [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"
+      [infoBoxHeading]="'Your list is empty'"
+      class="info-box">
+      <app-button [buttonText]="'Add new course'"
+                  addNewCourseInfoButton
+                  routerLink="/courses/add"></app-button>
+    </app-info>
+  </ng-template>
   <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
+                   *ngIf="courses.length; else emptyInfo"
                    [courses]="courses"></app-course-list>
   <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
                      *ngIf="somethingHappened"
@@ -25,5 +23,8 @@
                      [okButtonText]="'OK'"
                      [title]="'Are you sure?'"
   ></app-confirm-modal>
+</section>
+<section class="container">
+  <router-outlet></router-outlet>
 </section>
 
