@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from '../models/course.model';
-import {CourseService} from '../../services/course.service';
+import {Course} from '../../shared/models/course.model';
+import {CourseService} from '../../shared/services/course.service';
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -17,6 +17,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseService.getCourses().then((courses: Course[]) => {
+      console.log(courses)
       this.courses = courses;
     });
   }

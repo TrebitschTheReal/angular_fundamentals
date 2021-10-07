@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ICourseCardActionButton} from '../../models/course-card-action-buttons-model';
-import {Course} from '../../models/course.model';
-import {CourseService} from '../../../services/course.service';
+import {ICourseCardActionButton} from '../../../shared/models/course-card-action-buttons-model';
+import {Course} from '../../../shared/models/course.model';
+import {CourseService} from '../../../shared/services/course.service';
 
 @Component({
   selector: 'app-course-list',

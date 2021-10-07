@@ -1,16 +1,16 @@
 export interface IAuthor {
-  id: number;
+  id: string;
   name: string;
 }
 
 export class Author implements IAuthor {
-  private readonly _id: number;
+  private readonly _id: string;
 
   constructor(
-    id?: number,
+    id?: string,
     name?: string,
   ) {
-    this._id = id as number;
+    this._id = id as string;
     this._name = name as string;
   }
 
@@ -24,7 +24,7 @@ export class Author implements IAuthor {
     this._name = value;
   }
 
-  public get id(): number {
+  public get id(): string {
     return this._id;
   }
 }

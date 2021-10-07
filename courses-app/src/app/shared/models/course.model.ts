@@ -1,5 +1,5 @@
 export interface ICourse {
-  id: number;
+  id: string;
   title: string;
   description: string;
   authors: string[];
@@ -8,17 +8,17 @@ export interface ICourse {
 }
 
 export class Course implements ICourse {
-  private readonly _id: number;
+  private readonly _id: string;
 
   constructor(
-    id?: number,
+    id?: string,
     title?: string,
     description?: string,
     authors?: string[],
     duration?: number,
     creationDate?: Date
   ) {
-    this._id = id as number;
+    this._id = id as string;
     this._title = title as string;
     this._description = description as string;
     this._authors = authors as string[];
@@ -76,7 +76,7 @@ export class Course implements ICourse {
     this._creationDate = value;
   }
 
-  public get id(): number {
+  public get id(): string {
     return this._id;
   }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Course} from '../features/models/course.model';
-import {COURSES} from '../features/mock/mock-courses';
-import {COURSE_LIST_ACTION_BUTTONS} from "../features/mock/mock-course-card-action-buttons";
+import {Course} from '../models/course.model';
+import {COURSES} from '../mock/mock-courses';
+import {COURSE_LIST_ACTION_BUTTONS} from "../mock/mock-course-card-action-buttons";
 
 
 @Injectable({
