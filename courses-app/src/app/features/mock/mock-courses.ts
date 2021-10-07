@@ -1,4 +1,4 @@
-import {Course} from "./course.model";
+import {Course} from "../models/course.model";
 
 export const COURSES: Course[] = [
   new Course(42, 'Java', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam harum velit praesentium, fugiat quidem nemo cumque explicabo culpa error consequatur, tempore veritatis laudantium expedita ad labore dignissimos dolorum perspiciatis nostrum accusamus repellat dolores ratione natus itaque? Dicta sapiente consequatur deserunt cumque quasi mollitia, esse totam temporibus facilis, quod numquam debitis praesentium. Harum quae cupiditate sapiente laboriosam, facilis temporibus quis ratione nulla rerum a corrupti natus accusantium neque assumenda eligendi aperiam?', ['John Doe', 'Another John Doe'], 121, new Date()),

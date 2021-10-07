@@ -9,8 +9,8 @@
       [infoBoxHeading]="'Your list is empty'"
       class="info-box">
       <app-button [buttonText]="'Add new course'"
-                  addNewCourseInfoButton
-                  routerLink="/courses/add"></app-button>
+                  [routerLink]="['/courses/add']"
+                  addNewCourseInfoButton></app-button>
     </app-info>
   </ng-template>
   <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"

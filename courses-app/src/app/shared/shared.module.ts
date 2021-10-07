@@ -18,6 +18,7 @@ import {
   TogglePasswordDirective
 } from './';
 import {FormsModule} from "@angular/forms";
+import {AppRoutingModule} from "../app-routing.module";
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -41,7 +42,8 @@ const components: any[] = [
   imports: [
     CommonModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   exports: components
 })

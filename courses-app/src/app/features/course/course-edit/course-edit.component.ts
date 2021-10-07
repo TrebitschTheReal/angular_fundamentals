@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Course} from "../../courses/shared/course.model";
+import {Course} from "../../models/course.model";
 import {authorNameValidationLogic} from "../../../shared/validators/author-name-validation-logic";
 
 @Component({

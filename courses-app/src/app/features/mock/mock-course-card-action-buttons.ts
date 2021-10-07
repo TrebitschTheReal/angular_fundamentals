@@ -1,4 +1,4 @@
-import {ICourseCardActionButton} from "./course-card-action-buttons-model";
+import {ICourseCardActionButton} from "../models/course-card-action-buttons-model";
 
 export const COURSE_LIST_ACTION_BUTTONS: ICourseCardActionButton[] = [
   {
