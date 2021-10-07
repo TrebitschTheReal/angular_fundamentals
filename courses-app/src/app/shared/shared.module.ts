@@ -19,6 +19,7 @@ import {
 } from './';
 import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "../app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -34,7 +35,7 @@ const components: any[] = [
   EmailValidatorDirective,
   AuthorNameValidatorDirective,
   TogglePasswordDirective,
-  PasswordEyeComponent
+  PasswordEyeComponent,
 ]
 
 @NgModule({
@@ -43,7 +44,8 @@ const components: any[] = [
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   exports: components
 })
