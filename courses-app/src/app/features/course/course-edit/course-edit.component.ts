@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Course} from "../../../shared/models/course.model";
 import {authorNameValidationLogic} from "../../../shared/validators/author-name-validation-logic";
@@ -9,7 +9,8 @@ import {authorNameValidationLogic} from "../../../shared/validators/author-name-
   styleUrls: ['./course-edit.component.scss']
 })
 export class CourseEditComponent implements OnInit {
-  course: Course = new Course();
+  @Input()
+  course: Course | undefined;
 
   courseForm: FormGroup = new FormGroup({
     'courseData': new FormGroup({

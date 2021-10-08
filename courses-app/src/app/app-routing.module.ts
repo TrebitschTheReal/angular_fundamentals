@@ -12,8 +12,8 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {
     path: 'courses', component: CoursesComponent, children: [
-      {path: ':id', component: CourseComponent},
-      {path: 'add', component: CourseComponent},
+      {path: 'new', component: CourseComponent},
+      {path: 'view/:id', component: CourseComponent},
       {path: 'edit/:id', component: CourseComponent},
     ]
   },

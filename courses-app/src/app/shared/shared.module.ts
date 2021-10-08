@@ -14,6 +14,7 @@ import {
   MinutesPipe,
   PasswordEyeComponent,
   SearchComponent,
+  SpinnerComponent,
   StringJoinerPipe,
   TogglePasswordDirective
 } from './';
@@ -36,15 +37,16 @@ const components: any[] = [
   AuthorNameValidatorDirective,
   TogglePasswordDirective,
   PasswordEyeComponent,
+  SpinnerComponent
 ]
 
 @NgModule({
   declarations: components,
   imports: [
+    AppRoutingModule,
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    AppRoutingModule,
     HttpClientModule
   ],
   exports: components

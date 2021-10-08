@@ -10,6 +10,7 @@ import {CourseListComponent} from './course-list/course-list.component';
 import {LoginModule} from "../login/login.module";
 import {RegistrationModule} from "../registration/registration.module";
 import {AppRoutingModule} from "../../app-routing.module";
+import {AuthorsStoreService} from "../../shared/services/authors/authors-store.service";
 
 
 @NgModule({
@@ -19,12 +20,12 @@ import {AppRoutingModule} from "../../app-routing.module";
     CourseCardComponent
   ],
   imports: [
+    AppRoutingModule,
     SharedModule,
     CommonModule,
     CourseModule,
     LoginModule,
-    RegistrationModule,
-    AppRoutingModule
+    RegistrationModule
   ],
   exports: [
     CoursesComponent,

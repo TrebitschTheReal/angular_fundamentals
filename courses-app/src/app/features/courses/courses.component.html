@@ -9,20 +9,23 @@
       [infoBoxHeading]="'Your list is empty'"
       class="info-box">
       <app-button [buttonText]="'Add new course'"
-                  [routerLink]="['/courses/add']"
+                  [routerLink]="['/courses/new']"
                   addNewCourseInfoButton></app-button>
     </app-info>
   </ng-template>
-  <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
-                   *ngIf="courses.length; else emptyInfo"
-                   [courses]="courses"></app-course-list>
-  <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
-                     *ngIf="somethingHappened"
-                     [cancelButtonText]="'CANCEL'"
-                     [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
-                     [okButtonText]="'OK'"
-                     [title]="'Are you sure?'"
-  ></app-confirm-modal>
+  <div *ngIf="isLoading; else courseList" class="big spinner-border" role="status"></div>
+  <ng-template #courseList>
+    <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
+                     *ngIf="courses.length; else emptyInfo"
+                     [courses]="courses"></app-course-list>
+    <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
+                       *ngIf="somethingHappened"
+                       [cancelButtonText]="'CANCEL'"
+                       [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
+                       [okButtonText]="'OK'"
+                       [title]="'Are you sure?'"
+    ></app-confirm-modal>
+  </ng-template>
 </section>
 <section class="container">
   <router-outlet></router-outlet>

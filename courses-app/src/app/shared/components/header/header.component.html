@@ -4,13 +4,23 @@
       <img alt="Courses Logo" src="../../../../assets/bootstrap.png">
       <a [routerLink]="['/courses']" class="navbar-logo-text">Courses</a>
     </div>
-    <ul class="navbar-menu">
+    <ul *ngIf="true; else guest" class="navbar-menu">
       <li class="navbar-menu-element">
-        <ng-content select="[userNameHeader]"></ng-content>
-      </li>
-      <li class="navbar-menu-element">
-        <ng-content select="[headerLogoutButton]"></ng-content>
+        <app-button [buttonIcon]="'fa fa-sign-out'"
+                    [buttonText]="'Login'"
+                    [routerLink]="['/login']"></app-button>
       </li>
     </ul>
+    <ng-template #guest>
+      <ul class="navbar-menu">
+        <li class="navbar-menu-element">
+          <span>{{'userName'}} - {{'userRole'}}</span>
+        </li>
+        <li class="navbar-menu-element">
+          <app-button [buttonIcon]="'fa fa-sign-out'"
+                      [buttonText]="'Logout'"></app-button>
+        </li>
+      </ul>
+    </ng-template>
   </nav>
 </header>
