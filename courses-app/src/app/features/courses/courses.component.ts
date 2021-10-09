@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../shared/models/course.model';
-import {CourseService} from '../../shared/services/course.service';
 import {ActivatedRoute} from "@angular/router";
-import {AuthorsStoreService} from "../../shared/services/authors/authors-store.service";
 import {CoursesStoreService} from "../../shared/services/courses/courses-store.service";
 
 @Component({
@@ -15,24 +13,18 @@ export class CoursesComponent implements OnInit {
   public somethingHappened: boolean = false;
   public isLoading = false;
 
-  constructor(private courseService: CourseService,
-              public route: ActivatedRoute,
-              public coursesStoreService: CoursesStoreService,
-              private authorsStoreService: AuthorsStoreService) {
+  constructor(public route: ActivatedRoute,
+              public coursesStoreService: CoursesStoreService) {
   }
 
   ngOnInit(): void {
-    this.authorsStoreService.isLoading$.subscribe(isLoading => {
+    this.coursesStoreService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading
     })
 
     this.coursesStoreService.courses$.subscribe((courses: Course[]) => {
       this.courses = courses
     })
-
-    // this.courseService.getCourses().then((courses: Course[]) => {
-    //   this.courses = courses;
-    // });
   }
 
   actionButtonClicked(courseClickEventData: { actionType: string, course: Course }) {

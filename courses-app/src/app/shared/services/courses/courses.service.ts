@@ -3,71 +3,45 @@ import {HttpClient} from "@angular/common/http";
 import {map, switchMap} from "rxjs/operators";
 import {forkJoin, Observable, of} from "rxjs";
 import {Course} from "../../models/course.model";
-import {AuthorsStoreService} from "../authors/authors-store.service";
+import {AuthorsService} from "../authors/authors.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
-  constructor(private http: HttpClient, private authorsStoreService: AuthorsStoreService) {
+  constructor(private http: HttpClient,
+              private authorService: AuthorsService) {
   }
 
-  // @TODO: Finish
   fetchAll(): Observable<Course[]> {
     return this.http
       .get<{ successful: boolean, result: Course[] }>(
         'http://localhost:3000/courses/all')
       .pipe(
-        switchMap(value =>
+        switchMap(coursesData =>
           forkJoin({
-            courses: of(value).pipe(
-              map((e) => {
-                console.log('Courses in switchMap: ', e.result)
-                return e.result
-              })
+            courses: of(coursesData).pipe(
+              map((e) => e.result)
             ),
-            authors: this.authorsStoreService.authors$.pipe(
-              map((e) => {
-                console.log('Authors in switchMap: ', e);
-                return e;
-              })
+            authors: this.authorService.fetchAll().pipe(
+              map((a) => a)
             ),
           }).pipe(
             map(e => {
-              console.log('Before map: ', e)
-              e.courses.map(courseElement => courseElement.authors.map(x => e.authors.find(y => y.id === x)))
-              console.log(e)
-              e.courses.map(course => new Course(
-                course.id,
-                course.title,
-                course.description,
-                course.authors,
-                course.duration,
-                course.creationDate,
-              ))
-              return e.courses;
+              console.log('Courses before matching authors: ', e);
+              return e.courses.map(course => {
+                //@TODO fix me
+                // @ts-ignore
+                course.authors = course.authors.map(authorId => {
+                  return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === authorId)?.name
+                })
+                return course
+              })
             })
           )
         )
       )
   }
-
-
-  // fetchAll(): Observable<Course[]> {
-  //   return this.http
-  //     .get<{ successful: boolean, result: Course[] }>(
-  //       'http://localhost:3000/courses/all')
-  //     .pipe(
-  //       map(e => e.result.map(course => new Course(
-  //         course.id,
-  //         course.title,
-  //         course.description,
-  //         course.authors,
-  //         course.duration,
-  //         course.creationDate,
-  //       )))
-  //     )
-  // }
 
   addCourse() {
 
