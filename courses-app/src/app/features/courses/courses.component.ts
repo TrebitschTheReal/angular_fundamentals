@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../shared/models/course.model';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesStoreService} from "../../shared/services/courses/courses-store.service";
 
 @Component({
@@ -13,7 +13,7 @@ export class CoursesComponent implements OnInit {
   public somethingHappened: boolean = false;
   public isLoading = false;
 
-  constructor(public route: ActivatedRoute,
+  constructor(public route: ActivatedRoute, private router: Router,
               public coursesStoreService: CoursesStoreService) {
   }
 
@@ -30,6 +30,21 @@ export class CoursesComponent implements OnInit {
   actionButtonClicked(courseClickEventData: { actionType: string, course: Course }) {
     courseClickEventData.actionType === 'delete' ? this.somethingHappened = true : null;
     console.log(`Report from courses.component: #id ${courseClickEventData.course.id} clicked! Click type: ${courseClickEventData.actionType}`)
+    switch (courseClickEventData.actionType) {
+      case 'edit':
+        this.navigateMe(courseClickEventData)
+        break;
+      case 'view':
+        this.navigateMe(courseClickEventData)
+        break;
+      case 'delete':
+        //xy.service.deleteCourse()
+        break;
+    }
+  }
+
+  navigateMe(courseClickEventData: { actionType: string, course: Course }) {
+    this.router.navigate([courseClickEventData.actionType + '/' + courseClickEventData.course.id], {relativeTo: this.route});
   }
 
   modalClicked(isModalConfirmed: boolean) {

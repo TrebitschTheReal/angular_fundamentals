@@ -43,6 +43,34 @@ export class CoursesService {
       )
   }
 
+  fetchCourse(id: string): Observable<Course> {
+    return this.http
+      .get<{ successful: boolean, result: Course }>(
+        'http://localhost:3000/courses/' + id)
+      .pipe(
+        switchMap(coursesData =>
+          forkJoin({
+            course: of(coursesData).pipe(
+              map((e) => e.result)
+            ),
+            authors: this.authorService.fetchAll().pipe(
+              map((a) => a)
+            ),
+          }).pipe(
+            map(e => {
+              console.log('Courses before matching authors: ', e);
+              //@TODO fix me
+              // @ts-ignore
+              e.course.authors = e.course.authors.map(authorId => {
+                return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === authorId)?.name
+              })
+              return e.course;
+            })
+          )
+        )
+      )
+  }
+
   addCourse() {
 
   }

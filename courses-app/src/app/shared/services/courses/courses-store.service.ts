@@ -3,11 +3,14 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Course} from "../../models/course.model";
 import {CoursesService} from "./courses.service";
 import {shareReplay} from "rxjs/operators";
+import {COURSE_LIST_ACTION_BUTTONS} from "../../mock/mock-course-card-action-buttons";
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesStoreService implements OnDestroy {
+  private readonly _course$$: BehaviorSubject<Course> = new BehaviorSubject<Course>(new Course());
+  public readonly course$: Observable<Course> = this._course$$.asObservable().pipe(shareReplay(1))
   private readonly _courses$$: BehaviorSubject<Course[]> = new BehaviorSubject<Course[]>([]);
   public readonly courses$: Observable<Course[]> = this._courses$$.asObservable().pipe(shareReplay(1))
   private readonly _loading$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -25,6 +28,20 @@ export class CoursesStoreService implements OnDestroy {
     this._courses$$.next(course);
   }
 
+  getCourse(courseId: string): void {
+    this._loading$$.next(true);
+    this.coursesService.fetchCourse(courseId).subscribe({
+      next: (course: Course) => {
+        console.log('Course arrived to store: ', course)
+        this._course$$.next(course);
+        this._loading$$.next(false);
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+  }
+
   addCourse(course: Course) {
     this.courses = [
       ...this.courses,
@@ -34,6 +51,10 @@ export class CoursesStoreService implements OnDestroy {
 
   ngOnDestroy() {
     console.log('destroy')
+  }
+
+  getCourseCardActionButtons() {
+    return Promise.resolve(COURSE_LIST_ACTION_BUTTONS)
   }
 
   private getAllCourses(): any {

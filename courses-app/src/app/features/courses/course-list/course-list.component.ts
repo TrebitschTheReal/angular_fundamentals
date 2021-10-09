@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ICourseCardActionButton} from '../../../shared/models/course-card-action-buttons-model';
 import {Course} from '../../../shared/models/course.model';
-import {CourseService} from '../../../shared/services/course.service';
+import {CoursesStoreService} from "../../../shared/services/courses/courses-store.service";
 
 @Component({
   selector: 'app-course-list',
@@ -21,11 +21,11 @@ export class CourseListComponent implements OnInit {
 
   public courseCardActionButtons: ICourseCardActionButton[] = [];
 
-  constructor(private courseService: CourseService) {
+  constructor(private coursesStoreService: CoursesStoreService) {
   }
 
   ngOnInit(): void {
-    this.courseService.getCourseCardActionButtons().then((courseCardActionButtons: ICourseCardActionButton[]) => {
+    this.coursesStoreService.getCourseCardActionButtons().then((courseCardActionButtons: ICourseCardActionButton[]) => {
       this.courseCardActionButtons = courseCardActionButtons;
     });
   }
