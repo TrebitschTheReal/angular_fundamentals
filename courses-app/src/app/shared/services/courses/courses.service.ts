@@ -8,6 +8,7 @@ import {AuthorsService} from "../authors/authors.service";
 @Injectable({
   providedIn: 'root'
 })
+//@TODO this needs a refactoring
 export class CoursesService {
   constructor(private http: HttpClient,
               private authorService: AuthorsService) {
@@ -32,8 +33,9 @@ export class CoursesService {
               return e.courses.map(course => {
                 //@TODO fix me
                 // @ts-ignore
-                course.authors = course.authors.map(authorId => {
-                  return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === authorId)?.name
+                course.authors = course.authors.map(author => {
+                  // Need force cast 'author' model into string, because backend sends only a string id
+                  return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === String(author))
                 })
                 return course
               })
@@ -61,8 +63,9 @@ export class CoursesService {
               console.log('Courses before matching authors: ', e);
               //@TODO fix me
               // @ts-ignore
-              e.course.authors = e.course.authors.map(authorId => {
-                return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === authorId)?.name
+              e.course.authors = e.course.authors.map(author => {
+                // Need force cast 'author' model into string, because backend sends only a string id
+                return e.authors.find(authorsCollectionElement => authorsCollectionElement.id === String(author))
               })
               return e.course;
             })

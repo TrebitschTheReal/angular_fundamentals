@@ -11,10 +11,13 @@ export class CourseCardComponent implements OnInit {
   @Input()
   public courseElement: Course = new Course();
 
+  courseAuthors: string[] = []
+
   constructor() {
   }
 
   ngOnInit(): void {
+    this.courseAuthors = this.courseElement.authors.map(e => e.name)
   }
 
 }

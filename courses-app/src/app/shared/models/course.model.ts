@@ -1,8 +1,10 @@
+import {Author} from "./author.model";
+
 export interface ICourse {
   id: string;
   title: string;
   description: string;
-  authors: string[];
+  authors: Author[];
   duration: number;
   creationDate: Date;
 }
@@ -12,14 +14,14 @@ export class Course implements ICourse {
     id?: string,
     title?: string,
     description?: string,
-    authors?: string[],
+    authors?: Author[],
     duration?: number,
     creationDate?: Date
   ) {
     this._id = id as string;
     this._title = title as string;
     this._description = description as string;
-    this._authors = authors as string[];
+    this._authors = authors as Author[];
     this._duration = duration as number;
     this._creationDate = creationDate as Date;
   }
@@ -54,13 +56,13 @@ export class Course implements ICourse {
     this._description = value;
   }
 
-  private _authors: string[];
+  private _authors: Author[];
 
-  public get authors(): string[] {
+  public get authors(): Author[] {
     return this._authors;
   }
 
-  public set authors(value: string[]) {
+  public set authors(value: Author[]) {
     this._authors = value;
   }
 

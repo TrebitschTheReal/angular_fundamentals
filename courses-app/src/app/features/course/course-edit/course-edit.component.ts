@@ -52,7 +52,7 @@ export class CourseEditComponent implements OnInit {
 
   initAuthors() {
     this.course?.authors?.forEach(author => {
-      const authorControl = new FormControl(author);
+      const authorControl = new FormControl(author.name);
       (<FormArray>this.courseForm.get('courseData.authors')).push(authorControl);
     })
   }
@@ -95,6 +95,10 @@ export class CourseEditComponent implements OnInit {
 
   private getCourse(courseId: string) {
     this.coursesStoreService.getCourse(courseId)
+  }
+
+  callThisShit(author: any) {
+    console.log(author)
   }
 
   private initCourse(courseId: string) {
