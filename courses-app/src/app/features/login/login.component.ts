@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm, NgModelGroup} from "@angular/forms";
+import {AuthService} from "../../auth/services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginData')
   public loginData: NgModelGroup | undefined;
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -22,7 +23,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log('Form submitted: ', this.loginForm)
-    console.log('Email errors: ', this.loginData?.control.controls)
+    console.log('Controls: ', this.loginData?.control.controls.email.value)
+    let user = {
+      email: this.loginData?.control.controls.email.value,
+      password: this.loginData?.control.controls.password.value
+    }
+
+    this.authService.login(user).subscribe(token => {
+      console.log(token)
+    })
   }
 
 }

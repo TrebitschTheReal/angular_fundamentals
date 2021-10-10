@@ -1,9 +1,9 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {Course} from "../../models/course.model";
+import {Course} from "../../../shared/models/course.model";
 import {CoursesService} from "./courses.service";
 import {shareReplay} from "rxjs/operators";
-import {COURSE_LIST_ACTION_BUTTONS} from "../../mock/mock-course-card-action-buttons";
+import {COURSE_LIST_ACTION_BUTTONS} from "../../../shared/mock/mock-course-card-action-buttons";
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +48,8 @@ export class CoursesStoreService implements OnDestroy {
       course
     ];
   }
+
+
 
   ngOnDestroy() {
     console.log('destroy')

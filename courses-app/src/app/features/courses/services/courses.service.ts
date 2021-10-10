@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map, switchMap} from "rxjs/operators";
 import {forkJoin, Observable, of} from "rxjs";
-import {Course} from "../../models/course.model";
-import {AuthorsService} from "../authors/authors.service";
+import {Course} from "../../../shared/models/course.model";
+import {AuthorsService} from "../../../shared/services/authors/authors.service";
 
 @Injectable({
   providedIn: 'root'

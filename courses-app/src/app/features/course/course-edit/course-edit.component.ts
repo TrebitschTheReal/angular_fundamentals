@@ -3,7 +3,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Course} from "../../../shared/models/course.model";
 import {authorNameValidationLogic} from "../../../shared/validators/author-name-validation-logic";
 import {ActivatedRoute, Params} from "@angular/router";
-import {CoursesStoreService} from "../../../shared/services/courses/courses-store.service";
+import {CoursesStoreService} from "../../courses/services/courses-store.service";
 
 @Component({
   selector: 'app-course-edit',
