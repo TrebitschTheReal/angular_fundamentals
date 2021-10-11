@@ -30,17 +30,7 @@ export class CoursesComponent implements OnInit {
   actionButtonClicked(courseClickEventData: { actionType: string, course: Course }) {
     courseClickEventData.actionType === 'delete' ? this.somethingHappened = true : null;
     console.log(`Report from courses.component: #id ${courseClickEventData.course.id} clicked! Click type: ${courseClickEventData.actionType}`)
-    switch (courseClickEventData.actionType) {
-      case 'edit':
-        this.navigateMe(courseClickEventData)
-        break;
-      case 'view':
-        this.navigateMe(courseClickEventData)
-        break;
-      case 'delete':
-        //xy.service.deleteCourse()
-        break;
-    }
+    this.navigateMe(courseClickEventData);
   }
 
   navigateMe(courseClickEventData: { actionType: string, course: Course }) {
