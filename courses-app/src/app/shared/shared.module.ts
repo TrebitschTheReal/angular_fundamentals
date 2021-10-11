@@ -20,7 +20,10 @@ import {
 } from './';
 import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "../app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthModule} from "../auth/auth.module";
+import {AuthTokenInterceptor} from "../auth/auth-token-interceptor";
+import {AuthorizedGuard} from "../auth/guards/authorized.guard";
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -43,13 +46,18 @@ const components: any[] = [
 @NgModule({
   declarations: components,
   imports: [
+    AuthModule,
     AppRoutingModule,
     CommonModule,
     FontAwesomeModule,
     FormsModule,
     HttpClientModule
   ],
-  exports: components
+  exports: components,
+  providers: [
+    AuthorizedGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true},
+  ],
 })
 export class SharedModule {
 }

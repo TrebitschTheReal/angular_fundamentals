@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from '../../shared/models/course.model';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesStoreService} from "./services/courses-store.service";
+import {AuthService} from "../../auth/services/auth.service";
 
 @Component({
   selector: 'app-courses',
@@ -13,11 +14,16 @@ export class CoursesComponent implements OnInit {
   public somethingHappened: boolean = false;
   public isLoading = false;
 
-  constructor(public route: ActivatedRoute, private router: Router,
-              public coursesStoreService: CoursesStoreService) {
+  constructor(public route: ActivatedRoute,
+              private router: Router,
+              public coursesStoreService: CoursesStoreService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.authService.isAuthorized$.subscribe(isAuthorized => {
+    })
+
     this.coursesStoreService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading
     })
@@ -34,7 +40,7 @@ export class CoursesComponent implements OnInit {
   }
 
   navigateMe(courseClickEventData: { actionType: string, course: Course }) {
-    this.router.navigate([courseClickEventData.actionType + '/' + courseClickEventData.course.id], {relativeTo: this.route});
+    this.router.navigate(['courses' + '/' + courseClickEventData.actionType + '/' + courseClickEventData.course.id]);
   }
 
   modalClicked(isModalConfirmed: boolean) {

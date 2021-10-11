@@ -1,22 +1,25 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStorageService {
+  private readonly _token$$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public readonly token$: Observable<string> = this._token$$.asObservable();
 
-  constructor(private window: Window) {
+  constructor() {
   }
 
-  setToken(token: string): void {
-
+  get token(): string {
+    return this._token$$.getValue();
   }
 
-  getToken() {
-
+  set token(token: string) {
+    this._token$$.next(token);
   }
 
   deleteToken() {
-
+    this._token$$.next('');
   }
 }

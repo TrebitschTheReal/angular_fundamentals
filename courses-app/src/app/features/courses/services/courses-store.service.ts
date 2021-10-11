@@ -2,7 +2,6 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Course} from "../../../shared/models/course.model";
 import {CoursesService} from "./courses.service";
-import {shareReplay} from "rxjs/operators";
 import {COURSE_LIST_ACTION_BUTTONS} from "../../../shared/mock/mock-course-card-action-buttons";
 
 @Injectable({
@@ -10,11 +9,11 @@ import {COURSE_LIST_ACTION_BUTTONS} from "../../../shared/mock/mock-course-card-
 })
 export class CoursesStoreService implements OnDestroy {
   private readonly _course$$: BehaviorSubject<Course> = new BehaviorSubject<Course>(new Course());
-  public readonly course$: Observable<Course> = this._course$$.asObservable().pipe(shareReplay(1))
+  public readonly course$: Observable<Course> = this._course$$.asObservable()
   private readonly _courses$$: BehaviorSubject<Course[]> = new BehaviorSubject<Course[]>([]);
-  public readonly courses$: Observable<Course[]> = this._courses$$.asObservable().pipe(shareReplay(1))
+  public readonly courses$: Observable<Course[]> = this._courses$$.asObservable()
   private readonly _loading$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public readonly isLoading$: Observable<boolean> = this._loading$$.asObservable().pipe(shareReplay(1))
+  public readonly isLoading$: Observable<boolean> = this._loading$$.asObservable()
 
   constructor(private coursesService: CoursesService) {
     this.getAllCourses();
@@ -48,7 +47,6 @@ export class CoursesStoreService implements OnDestroy {
       course
     ];
   }
-
 
 
   ngOnDestroy() {
