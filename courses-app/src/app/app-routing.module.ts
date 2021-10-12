@@ -7,20 +7,25 @@ import {ErrorPageComponent} from "./shared";
 import {CourseComponent} from "./features/course/course.component";
 import {AuthorizedGuard} from "./auth/guards/authorized.guard";
 import {WelcomeComponent} from "./features/welcome/welcome/welcome.component";
+import {AdminGuard} from "./auth/guards/admin.guard";
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
+  {path: 'welcome', component: WelcomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {
     path: 'courses',
     canActivate: [AuthorizedGuard],
-    canActivateChild: [AuthorizedGuard],
     component: CoursesComponent,
     children: [
-      {path: 'new', component: CourseComponent},
-      {path: 'view/:id', component: CourseComponent},
-      {path: 'edit/:id', component: CourseComponent},
+      {
+        path: 'new',
+        canActivate: [AdminGuard],
+        component: CourseComponent
+      },
+      {path: 'view/:id', canActivate: [AuthorizedGuard], component: CourseComponent},
+      {path: 'edit/:id', canActivate: [AdminGuard], component: CourseComponent},
     ]
   },
   {path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'}},
