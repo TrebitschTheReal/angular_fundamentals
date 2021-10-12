@@ -47,7 +47,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.courseForm);
+    console.log(this.courseForm.get('courseData'));
   }
 
   initAuthors() {
