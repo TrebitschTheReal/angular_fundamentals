@@ -14,10 +14,14 @@ export class UserService {
 
   public fetchUser(): Observable<User> {
     return this.http
-      .get<{ successful: boolean, result: User }>(
-        'http://localhost:3000/users/me')
+      .get<{ successful: boolean, result: User }>('http://localhost:3000/users/me')
       .pipe(
         map(e => e.result)
       )
+  }
+
+  public registerUser(user: { name: string, email: string, password: string }): Observable<{ successful: boolean, result: string }> {
+    return this.http
+      .post<{ successful: boolean, result: string }>('http://localhost:3000/register', user)
   }
 }

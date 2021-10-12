@@ -39,18 +39,24 @@ export class AuthService {
   }
 
   logout() {
-    this.http.delete('http://localhost:3000/logout').subscribe({
-      next: _ => {
-        this._authorized$$.next(false);
-        this.sessionStorageService.deleteToken();
-        this.userStoreService.deleteUserState();
-        this.router.navigate(['/login'])
-      },
-      error: error => {
-        this.router.navigate(['/login'])
-        throw error;
-      }
-    })
+    this._authorized$$.next(false);
+    this.sessionStorageService.deleteToken();
+    this.userStoreService.deleteUserState();
+    this.router.navigate(['/login'])
+
+    // Unnecessary to call logout endpoint
+    // this.http.delete('http://localhost:3000/logout').subscribe({
+    //   next: _ => {
+    //     this._authorized$$.next(false);
+    //     this.sessionStorageService.deleteToken();
+    //     this.userStoreService.deleteUserState();
+    //     this.router.navigate(['/login'])
+    //   },
+    //   error: error => {
+    //     this.router.navigate(['/login'])
+    //     throw error;
+    //   }
+    // })
   }
 
   register() {
@@ -62,8 +68,10 @@ export class AuthService {
     if (token) {
       this.userStoreService.getUser();
       this._authorized$$.next(true);
-    } else {
-      this._authorized$$.next(false);
+    }
+    //@Todo fixme
+    else {
+      this.logout();
     }
   }
 

@@ -27,8 +27,21 @@ export class UserStoreService {
         this._isAdmin$$.next(user.role === 'admin')
       },
       error: error => {
-        sessionStorage.removeItem('token')
-        throw error
+        // @ TODO fixme
+        //this.authService.logout();
+        //throw error
+        console.log(error)
+      }
+    })
+  }
+
+  public registerUser(user: { name: string, email: string, password: string }): void {
+    this.userService.registerUser(user).subscribe({
+      next: result => {
+        console.log(result)
+      },
+      error: err => {
+        throw err
       }
     })
   }

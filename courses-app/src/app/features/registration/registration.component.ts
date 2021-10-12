@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {validEmailValidator} from "../../shared/validators/email-validation-logic";
+import {UserStoreService} from "../../user/user-store.service";
 
 @Component({
   selector: 'app-registration',
@@ -17,7 +18,7 @@ export class RegistrationComponent implements OnInit {
     })
   })
 
-  constructor() {
+  constructor(private userStoreService: UserStoreService) {
   }
 
   ngOnInit(): void {
@@ -35,6 +36,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registrationForm.get('registrationData'));
+    let newUser = {
+      name: this.registrationForm.get('registrationData.name')?.value,
+      email: this.registrationForm.get('registrationData.email')?.value,
+      password: this.registrationForm.get('registrationData.password')?.value
+    }
+    this.userStoreService.registerUser(newUser)
   }
 }
