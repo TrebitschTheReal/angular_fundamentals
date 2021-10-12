@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAuthorized$.subscribe(isAuth => {
       if (isAuth) {
-        this.router.navigate([''])
+        this.router.navigate(['/courses'])
       }
     })
   }

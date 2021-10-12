@@ -19,7 +19,11 @@ export class SessionStorageService {
     this._token$$.next(token);
   }
 
+  refreshToken(): void {
+
+  }
+
   deleteToken() {
-    this._token$$.next('');
+    sessionStorage.removeItem('token')
   }
 }

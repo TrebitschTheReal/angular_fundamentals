@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {SessionStorageService} from "./session-storage.service";
 import {UserStoreService} from "../../user/user-store.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private sessionStorageService: SessionStorageService,
-              private userStoreService: UserStoreService) {
+              private userStoreService: UserStoreService,
+              private router: Router) {
     this.initUserSession();
   }
 
@@ -24,7 +26,7 @@ export class AuthService {
       this.blockLoginTemporary(3000);
       this.http.post('http://localhost:3000/login', user).subscribe({
         next: (result: any) => {
-          console.log(result.result)
+          sessionStorage.setItem('token', result.result)
           this.sessionStorageService.token = result.result;
           this.userStoreService.getUser();
           this._authorized$$.next(true);
@@ -38,11 +40,11 @@ export class AuthService {
 
   logout() {
     this.http.delete('http://localhost:3000/logout').subscribe({
-      next: logoutResult => {
-        console.log('logged out');
+      next: _ => {
         this._authorized$$.next(false);
         this.sessionStorageService.deleteToken();
-        this.userStoreService.deleteUserSession();
+        this.userStoreService.deleteUserState();
+        this.router.navigate(['/login'])
       },
       error: error => {
         throw error;
@@ -55,10 +57,12 @@ export class AuthService {
   }
 
   private initUserSession() {
-    let token: string | null = localStorage.getItem('token');
+    let token: string | null = sessionStorage.getItem('token');
     if (token) {
-      this.sessionStorageService.token = token;
-      this._authorized$$.next(true)
+      this.userStoreService.getUser();
+      this._authorized$$.next(true);
+    } else {
+      this._authorized$$.next(false);
     }
   }
 

@@ -5,13 +5,12 @@ import {LoginComponent} from "./features/login/login.component";
 import {RegistrationComponent} from "./features/registration/registration.component";
 import {ErrorPageComponent} from "./shared";
 import {CourseComponent} from "./features/course/course.component";
-import {LogoutComponent} from "./features/logout/logout.component";
 import {AuthorizedGuard} from "./auth/guards/authorized.guard";
+import {WelcomeComponent} from "./features/welcome/welcome/welcome.component";
 
 const routes: Routes = [
-  {path: '', component: CoursesComponent},
+  {path: '', component: WelcomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'logout', component: LogoutComponent},
   {path: 'registration', component: RegistrationComponent},
   {
     path: 'courses',

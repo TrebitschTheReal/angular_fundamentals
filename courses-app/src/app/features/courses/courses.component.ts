@@ -13,6 +13,7 @@ export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
   public somethingHappened: boolean = false;
   public isLoading = false;
+  public isAuthorized = false;
 
   constructor(public route: ActivatedRoute,
               private router: Router,
@@ -22,6 +23,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.isAuthorized$.subscribe(isAuthorized => {
+      this.isAuthorized = isAuthorized;
     })
 
     this.coursesStoreService.isLoading$.subscribe(isLoading => {

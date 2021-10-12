@@ -6,12 +6,12 @@ import {CoursesModule} from './features/courses/courses.module';
 
 import {AppComponent} from './app.component';
 import {SharedModule} from "./shared/shared.module";
-import {LogoutComponent} from './features/logout/logout.component';
+import { WelcomeComponent } from './features/welcome/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogoutComponent
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,

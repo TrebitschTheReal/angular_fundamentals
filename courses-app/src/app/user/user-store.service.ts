@@ -13,40 +13,22 @@ export class UserStoreService {
   public readonly isAdmin$: Observable<boolean> = this._isAdmin$$.asObservable();
 
   constructor(private userService: UserService) {
-    this.initUserSession();
   }
 
-  public deleteUserSession(): void {
-    localStorage.removeItem('userName')
-    localStorage.removeItem('userRole')
+  public deleteUserState(): void {
     this._user$$.next(undefined)
   }
 
   public getUser(): void {
     console.log('Fetching user')
-    this.userService.fetchUser().subscribe(user => {
-      localStorage.setItem('userName', user.name);
-      localStorage.setItem('userRole', user.role);
-      this._user$$.next(user)
-
-      user.role === 'admin' ?
-        this._isAdmin$$.next(true) :
-        this._isAdmin$$.next(false)
+    this.userService.fetchUser().subscribe({
+      next: user => {
+        this._user$$.next(user)
+        this._isAdmin$$.next(user.role === 'admin')
+      },
+      error: error => {
+        throw error
+      }
     })
-  }
-
-  private initUserSession() {
-    let userName: string | null = localStorage.getItem('userName');
-    let userRole: string | null = localStorage.getItem('userRole');
-
-    if (!this._user$$.getValue() && userName && userRole) {
-      this._user$$.next(new User(
-        'dummy',
-        'dummy',
-        userName,
-        'why is this even here',
-        userRole
-      ))
-    }
   }
 }

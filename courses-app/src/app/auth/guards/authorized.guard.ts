@@ -58,10 +58,8 @@ export class AuthorizedGuard implements CanActivate, CanActivateChild {
     return this.authService.isAuthorized$.pipe(
       map((isAuthorized: boolean) => {
         if (isAuthorized) {
-          console.log('Guard isauthorized')
           return true;
         } else {
-          console.log('Guard guarding')
           this.router.navigate(['/login']);
           return false;
         }

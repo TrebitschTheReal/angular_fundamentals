@@ -15,13 +15,11 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(private userStoreService: UserStoreService,
-              private authService: AuthService,
-              private router: Router) {
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.userStoreService.user$.subscribe(user => {
-      console.log(user)
       this.userName = user?.name;
       this.userRole = user?.role;
     })
@@ -32,6 +30,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['/logout'])
+    this.authService.logout();
   }
 }
