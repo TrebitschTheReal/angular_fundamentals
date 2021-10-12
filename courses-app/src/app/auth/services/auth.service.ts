@@ -47,6 +47,7 @@ export class AuthService {
         this.router.navigate(['/login'])
       },
       error: error => {
+        this.router.navigate(['/login'])
         throw error;
       }
     })

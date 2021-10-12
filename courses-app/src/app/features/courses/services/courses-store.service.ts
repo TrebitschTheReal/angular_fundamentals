@@ -48,6 +48,18 @@ export class CoursesStoreService implements OnDestroy {
     ];
   }
 
+  deleteCourse(id: string): void {
+    this.coursesService.deleteCourse(id).subscribe({
+      next: (result: { successful: boolean, result: string }) => {
+        console.log(result)
+        this.getAllCourses();
+      },
+      error: err => {
+        throw err
+      }
+    })
+  }
+
 
   ngOnDestroy() {
     console.log('destroy')

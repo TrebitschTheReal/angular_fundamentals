@@ -19,7 +19,7 @@
                      *ngIf="courses.length; else emptyInfo"
                      [courses]="courses"></app-course-list>
     <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
-                       *ngIf="somethingHappened"
+                       *ngIf="modalShow"
                        [cancelButtonText]="'CANCEL'"
                        [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
                        [okButtonText]="'OK'"

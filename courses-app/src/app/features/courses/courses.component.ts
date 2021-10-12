@@ -11,9 +11,10 @@ import {AuthService} from "../../auth/services/auth.service";
 })
 export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
-  public somethingHappened: boolean = false;
+  public modalShow: boolean = false;
   public isLoading = false;
   public isAuthorized = false;
+  private clickedCourseId: string = '';
 
   constructor(public route: ActivatedRoute,
               private router: Router,
@@ -36,9 +37,14 @@ export class CoursesComponent implements OnInit {
   }
 
   actionButtonClicked(courseClickEventData: { actionType: string, course: Course }) {
-    courseClickEventData.actionType === 'delete' ? this.somethingHappened = true : null;
     console.log(`Report from courses.component: #id ${courseClickEventData.course.id} clicked! Click type: ${courseClickEventData.actionType}`)
-    this.navigateMe(courseClickEventData);
+
+    if (courseClickEventData.actionType === 'delete') {
+      this.clickedCourseId = courseClickEventData.course.id;
+      this.modalShow = true
+    } else {
+      this.navigateMe(courseClickEventData);
+    }
   }
 
   navigateMe(courseClickEventData: { actionType: string, course: Course }) {
@@ -46,10 +52,10 @@ export class CoursesComponent implements OnInit {
   }
 
   modalClicked(isModalConfirmed: boolean) {
-    this.somethingHappened = false;
+    this.modalShow = false;
 
     if (isModalConfirmed) {
-      console.log('starting the operation')
+      this.coursesStoreService.deleteCourse(this.clickedCourseId);
     } else {
       console.log('do nothing')
     }

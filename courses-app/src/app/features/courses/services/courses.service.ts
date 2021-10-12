@@ -74,6 +74,16 @@ export class CoursesService {
       )
   }
 
+  deleteCourse(id: string): Observable<{ successful: boolean, result: string }> {
+    return this.http
+      .delete<{ successful: boolean, result: string }>(
+        'http://localhost:3000/courses/' + id)
+      .pipe(
+        map((e: { successful: boolean, result: string }) => {
+          return e;
+        }))
+  }
+
   addCourse() {
 
   }

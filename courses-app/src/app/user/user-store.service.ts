@@ -27,6 +27,7 @@ export class UserStoreService {
         this._isAdmin$$.next(user.role === 'admin')
       },
       error: error => {
+        sessionStorage.removeItem('token')
         throw error
       }
     })
