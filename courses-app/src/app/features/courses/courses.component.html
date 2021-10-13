@@ -3,6 +3,11 @@
   <app-search (searchButtonClicked)="onSearchButtonClicked($event)"
               [placeholder]="'Type something'"
   ></app-search>
+  <app-button *ngIf="isAdmin && courses.length"
+              [buttonText]="'Add new course'"
+              [routerLink]="['new']"
+
+  ></app-button>
   <ng-template #emptyInfo>
     <app-info
       [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"

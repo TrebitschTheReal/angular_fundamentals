@@ -3,10 +3,10 @@ import {ActivatedRoute, Data} from '@angular/router';
 
 @Component({
   selector: 'app-error-page',
-  templateUrl: './error-page.component.html',
-  styleUrls: ['./error-page.component.scss']
+  templateUrl: './not-found.component.html',
+  styleUrls: ['./not-found.component.scss']
 })
-export class ErrorPageComponent implements OnInit {
+export class NotFoundComponent implements OnInit {
   errorMessage: string = '';
 
   constructor(private route: ActivatedRoute) {

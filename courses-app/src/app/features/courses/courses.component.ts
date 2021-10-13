@@ -1,37 +1,50 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Course} from '../../shared/models/course.model';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesStoreService} from "./services/courses-store.service";
 import {AuthService} from "../../auth/services/auth.service";
+import {UserStoreService} from "../../user/user-store.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   public courses: Course[] = [];
   public modalShow: boolean = false;
-  public isLoading = false;
-  public isAuthorized = false;
+  public isLoading: boolean = false;
+  public isAuthorized: boolean = false;
+  public isAdmin: boolean = false;
+
+  private isAuthorizedSubscription: Subscription | undefined;
+  private isAdminSubscription: Subscription | undefined;
+  private isLoadingSubscription: Subscription | undefined;
+  private coursesSubscription: Subscription | undefined;
   private clickedCourseId: string = '';
 
   constructor(public route: ActivatedRoute,
               private router: Router,
-              public coursesStoreService: CoursesStoreService,
+              private coursesStoreService: CoursesStoreService,
+              private userStoreService: UserStoreService,
               private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.authService.isAuthorized$.subscribe(isAuthorized => {
+    this.isAuthorizedSubscription = this.authService.isAuthorized$.subscribe(isAuthorized => {
       this.isAuthorized = isAuthorized;
     })
 
-    this.coursesStoreService.isLoading$.subscribe(isLoading => {
+    this.isAdminSubscription = this.userStoreService.isAdmin$.subscribe((isAdmin: boolean) => {
+      this.isAdmin = isAdmin;
+    })
+
+    this.isLoadingSubscription = this.coursesStoreService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading
     })
 
-    this.coursesStoreService.courses$.subscribe((courses: Course[]) => {
+    this.coursesSubscription = this.coursesStoreService.courses$.subscribe((courses: Course[]) => {
       this.courses = courses
     })
   }
@@ -63,5 +76,12 @@ export class CoursesComponent implements OnInit {
 
   onSearchButtonClicked(searchSlug: string) {
     console.log('search button clicked! Filter:', searchSlug)
+  }
+
+  ngOnDestroy() {
+    this.coursesSubscription?.unsubscribe()
+    this.isAdminSubscription?.unsubscribe()
+    this.isAuthorizedSubscription?.unsubscribe()
+    this.isLoadingSubscription?.unsubscribe()
   }
 }

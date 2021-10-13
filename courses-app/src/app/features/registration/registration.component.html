@@ -78,4 +78,12 @@
          class="registration-container-box-bottom-link">Login</a>
     </div>
   </div>
+  <div class="row">
+    <ng-container *ngIf="isLoading; else errorMessages">
+      <app-spinner [bigSpinner]="false"></app-spinner>
+    </ng-container>
+    <ng-template #errorMessages>
+      <app-result-message [resultMessages]="resultMessages"></app-result-message>
+    </ng-template>
+  </div>
 </div>

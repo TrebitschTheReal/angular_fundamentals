@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {CoursesComponent} from "./features/courses/courses.component";
 import {LoginComponent} from "./features/login/login.component";
 import {RegistrationComponent} from "./features/registration/registration.component";
-import {ErrorPageComponent} from "./shared";
+import {NotFoundComponent} from "./shared";
 import {CourseComponent} from "./features/course/course.component";
 import {AuthorizedGuard} from "./auth/guards/authorized.guard";
 import {WelcomeComponent} from "./features/welcome/welcome/welcome.component";
@@ -20,15 +20,23 @@ const routes: Routes = [
     component: CoursesComponent,
     children: [
       {
+        path: 'view/:id',
+        canActivate: [AuthorizedGuard],
+        component: CourseComponent
+      },
+      {
         path: 'new',
         canActivate: [AdminGuard],
         component: CourseComponent
       },
-      {path: 'view/:id', canActivate: [AuthorizedGuard], component: CourseComponent},
-      {path: 'edit/:id', canActivate: [AdminGuard], component: CourseComponent},
+      {
+        path: 'edit/:id',
+        canActivate: [AdminGuard],
+        component: CourseComponent
+      },
     ]
   },
-  {path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'}},
+  {path: 'not-found', component: NotFoundComponent, data: {message: '404 - Page not found!'}},
   {path: '**', redirectTo: '/not-found'}
 ];
 

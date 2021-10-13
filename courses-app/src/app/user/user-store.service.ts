@@ -34,15 +34,4 @@ export class UserStoreService {
       }
     })
   }
-
-  public registerUser(user: { name: string, email: string, password: string }): void {
-    this.userService.registerUser(user).subscribe({
-      next: result => {
-        console.log(result)
-      },
-      error: err => {
-        throw err
-      }
-    })
-  }
 }

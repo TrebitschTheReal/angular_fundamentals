@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {catchError} from "rxjs/operators";
-import {AuthService} from "./services/auth.service";
 
 @Injectable()
 
@@ -21,15 +19,15 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     }
     return next.handle(modifiedReq)
       .pipe(
-        catchError((err: any) => {
-          console.log(err)
-          if (err instanceof HttpErrorResponse && (err.status === 401 || err.status === 403)) {
-            // @ TODO fixme
-            // call logout
-            //this.authService.logout();
-          }
-          throw err;
-        })
+        // catchError((err: any) => {
+        //   console.log('This is from the interceptor: ', err)
+        //   if (err instanceof HttpErrorResponse && (err.status === 401 || err.status === 403)) {
+        //     // @ TODO fixme
+        //     // call logout
+        //     //this.authService.logout();
+        //   }
+        //   throw err;
+        // })
       );
   }
 }

@@ -1,4 +1,9 @@
-<div class="loading-spinner-coverall"></div>
-<div class="loading-spinner-coverall-body">
+<ng-container *ngIf="bigSpinner; else normalSpinner">
+  <div class="loading-spinner-coverall"></div>
+  <div class="loading-spinner-coverall-body">
+    <div class="spinner-border" role="status"></div>
+  </div>
+</ng-container>
+<ng-template #normalSpinner>
   <div class="spinner-border" role="status"></div>
-</div>
+</ng-template>

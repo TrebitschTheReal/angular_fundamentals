@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {User} from "../shared/models/user.model";
-import {map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
+import {catchError, map} from "rxjs/operators";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,33 @@ export class UserService {
       )
   }
 
-  public registerUser(user: { name: string, email: string, password: string }): Observable<{ successful: boolean, result: string }> {
+  //@TODO if no error: switchmap -> get user data
+  public signUserIn(user: { email: string, password: string }): Observable<string> {
+    return this.http.post('http://localhost:3000/login', user)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log('pure error: ', error)
+          return throwError([error.error.result])
+        }),
+        map(((next: any) => {
+          console.log('pure next: ', next.result)
+          return next.result
+        }))
+      )
+  }
+
+  public registerUser(user: { name: string, email: string, password: string }): Observable<string> {
     return this.http
       .post<{ successful: boolean, result: string }>('http://localhost:3000/register', user)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log('pure error: ', error.error)
+          return throwError(error.error)
+        }),
+        map(((next: any) => {
+          console.log('pure next: ', next)
+          return next.result
+        }))
+      )
   }
 }
