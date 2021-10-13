@@ -34,30 +34,31 @@ export class AuthService {
       this.blockLoginTemporary(3000);
       this._loading$$.next(true);
 
-      this.userService.signUserIn(user).subscribe({
-        next: token => {
-          sessionStorage.setItem('token', token)
-          this.sessionStorageService.token = token;
-          this.userStoreService.getUser();
-          this._authorized$$.next(true);
-          this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
-          this._loading$$.next(false);
-        },
-        error: err => {
-          console.log('ERROR FROM SZERVIZ', err)
-          this._resultMessage$$.next(new ResultMessage(false, err))
-          this._loading$$.next(false);
-        }
-      })
+      this.userStoreService.signInAndSetUserSession(user)
+        .subscribe({
+          next: (resultLoginPack: any) => {
+            console.log('Result loginPack in auth service: ', resultLoginPack)
+            this._authorized$$.next(true);
+            this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
+            this._loading$$.next(false);
+          },
+          error: err => {
+            console.log('Error login at subscribe - auth-service', err)
+            this._resultMessage$$.next(new ResultMessage(false, err))
+            this._loading$$.next(false);
+          }
+        })
     }
   }
 
-  logout() {
+  logout(withMessage?: boolean) {
     this._authorized$$.next(false);
     this.sessionStorageService.deleteToken();
     this.userStoreService.deleteUserState();
     this.router.navigate(['/login'])
-    this._resultMessage$$.next(new ResultMessage(true, ['Logout success']))
+    if (withMessage) {
+      this._resultMessage$$.next(new ResultMessage(true, ['Logout success']))
+    }
   }
 
   register(user: { name: string, email: string, password: string }): void {
@@ -86,8 +87,15 @@ export class AuthService {
   private initUserSession() {
     let token: string | null = sessionStorage.getItem('token');
     if (token) {
-      this.userStoreService.getUser();
-      this._authorized$$.next(true);
+      this.userStoreService.setUserSession().subscribe({
+        next: () => {
+          this._authorized$$.next(true);
+        },
+        error: (error) => {
+          console.log(error)
+          this._resultMessage$$.next(new ResultMessage(false, error.errors))
+        },
+      })
     }
   }
 

@@ -44,10 +44,11 @@ import {
   UrlSegment,
   UrlTree
 } from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from "rxjs/operators";
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, map} from "rxjs/operators";
 import {UserStoreService} from "../../user/user-store.service";
 import {AuthService} from "../services/auth.service";
+import {UserService} from "../../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -55,22 +56,25 @@ import {AuthService} from "../services/auth.service";
 export class AuthorizedGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private userStoreService: UserStoreService,
               private authService: AuthService,
+              private userService: UserService,
               private router: Router) {
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.isAuthorized$.pipe(
-      map((isAuthorized: boolean) => {
-        if (isAuthorized) {
-          return true;
-        } else {
-          this.router.navigate(['/welcome']);
-          return false;
-        }
-      })
-    )
+    return this.userService.fetchUser()
+      .pipe(
+        catchError((error: any) => {
+          throwError(error)
+          this.authService.logout(false);
+          this.router.navigate(['/login'])
+          return of(false)
+        }),
+        map(success => {
+          return true
+        })
+      )
   }
 
 
@@ -80,6 +84,8 @@ export class AuthorizedGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.canActivate(route, state);
   }
 
+
+  //@TODO - Fixme
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

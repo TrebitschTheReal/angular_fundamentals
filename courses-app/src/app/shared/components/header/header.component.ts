@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserStoreService} from "../../../user/user-store.service";
 import {AuthService} from "../../../auth/services/auth.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -30,6 +29,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout(true);
   }
 }
