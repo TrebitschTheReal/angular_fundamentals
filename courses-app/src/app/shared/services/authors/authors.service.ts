@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Author} from "../../models/author.model";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,15 @@ export class AuthorsService {
       )
   }
 
-  addAuthor() {
-
+  addAuthor(author: Author): Observable<any> {
+    return this.http
+      .post<{ successful: boolean, result: Author }>(
+        'http://localhost:3000/authors/add', author)
+      .pipe(
+        catchError(e => {
+          return throwError(e)
+        }),
+        map(e => e.result)
+      )
   }
 }

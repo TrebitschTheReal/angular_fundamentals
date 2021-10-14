@@ -25,11 +25,8 @@ export class AuthorsStoreService implements OnDestroy {
     this._authors$$.next(author);
   }
 
-  addAuthor(author: Author) {
-    this.authors = [
-      ...this.authors,
-      author
-    ];
+  createAuthor(author: Author) {
+    return this.authorsService.addAuthor(author)
   }
 
   ngOnDestroy() {

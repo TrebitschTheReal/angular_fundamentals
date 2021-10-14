@@ -4,27 +4,14 @@ export interface IAuthor {
 }
 
 export class Author implements IAuthor {
-  private readonly _id: string;
+  readonly id: string;
+  name: string;
 
   constructor(
     id?: string,
     name?: string,
   ) {
-    this._id = id as string;
-    this._name = name as string;
-  }
-
-  private _name: string;
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public set name(value: string) {
-    this._name = value;
-  }
-
-  public get id(): string {
-    return this._id;
+    this.id = id as string;
+    this.name = name as string;
   }
 }

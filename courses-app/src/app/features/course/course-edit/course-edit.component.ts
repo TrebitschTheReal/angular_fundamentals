@@ -49,6 +49,10 @@ export class CourseEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.prepareCourse();
+
+    this.course.id ?
+      this.coursesStoreService.editCourse(this.course) :
+      this.coursesStoreService.createCourse(this.course)
   }
 
   initAuthors() {

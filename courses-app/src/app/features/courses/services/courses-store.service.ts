@@ -3,6 +3,9 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Course} from "../../../shared/models/course.model";
 import {CoursesService} from "./courses.service";
 import {COURSE_LIST_ACTION_BUTTONS} from "../../../shared/mock/mock-course-card-action-buttons";
+import {AuthorsStoreService} from "../../../shared/services/authors/authors-store.service";
+import {AuthorsService} from "../../../shared/services/authors/authors.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,10 @@ export class CoursesStoreService implements OnDestroy {
   private readonly _loading$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly isLoading$: Observable<boolean> = this._loading$$.asObservable()
 
-  constructor(private coursesService: CoursesService) {
+  constructor(private coursesService: CoursesService,
+              private authorsService: AuthorsService,
+              private router: Router,
+              private authorsStoreService: AuthorsStoreService) {
     this.getAllCourses();
   }
 
@@ -47,11 +53,21 @@ export class CoursesStoreService implements OnDestroy {
     }
   }
 
-  addCourse(course: Course) {
-    this.courses = [
-      ...this.courses,
-      course
-    ];
+  public createCourse(course: Course) {
+    // Creating an array of observables from the authors we want to create
+    let authorObservables = course.authors.map(e => {
+      return this.authorsStoreService.createAuthor(e)
+    })
+
+    this.coursesService.magicCreateCourse(course, authorObservables).subscribe({
+      next: (course: Course) => {
+        console.log('Course arrived after magic creation: ', course)
+        this.router.navigate([`courses/edit/${course.id}`]);
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    })
   }
 
   deleteCourse(id: string): void {
@@ -64,6 +80,10 @@ export class CoursesStoreService implements OnDestroy {
         throw err
       }
     })
+  }
+
+  public editCourse(course: Course) {
+
   }
 
 
