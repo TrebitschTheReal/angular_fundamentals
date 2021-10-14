@@ -1,5 +1,5 @@
 <div class="course-edit-container">
-  <div *ngIf="isLoading; else courseFormBox" class="big spinner-border" role="status"></div>
+  <app-spinner *ngIf="isLoading; else courseFormBox"></app-spinner>
   <ng-template #courseFormBox>
     <form (ngSubmit)="onSubmit()"
           [formGroup]="courseForm"

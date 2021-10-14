@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Course} from "../../../shared/models/course.model";
 import {authorNameValidationLogic} from "../../../shared/validators/author-name-validation-logic";
 import {ActivatedRoute, Params} from "@angular/router";
 import {CoursesStoreService} from "../../courses/services/courses-store.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-course-edit',
   templateUrl: './course-edit.component.html',
   styleUrls: ['./course-edit.component.scss']
 })
-export class CourseEditComponent implements OnInit {
+export class CourseEditComponent implements OnInit, OnDestroy {
   @Input()
   course: Course | undefined;
   isLoading: boolean = false;
@@ -22,27 +23,26 @@ export class CourseEditComponent implements OnInit {
       'authors': new FormArray([]),
     })
   })
+  private isLoadingSubscription: Subscription | undefined;
+  private coursesSubscription: Subscription | undefined;
+  private routeSubscription: Subscription | undefined;
 
   constructor(private route: ActivatedRoute, private coursesStoreService: CoursesStoreService) {
   }
 
   ngOnInit(): void {
-    this.initForm();
-
-    this.coursesStoreService.isLoading$.subscribe(isLoading => {
+    this.isLoadingSubscription = this.coursesStoreService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading;
     })
 
-    this.coursesStoreService.course$.subscribe(course => {
+    this.coursesSubscription = this.coursesStoreService.course$.subscribe(course => {
       this.course = course;
       this.initForm();
       this.initAuthors();
     })
 
-    this.route.params.subscribe((params: Params) => {
-      if (params['id']) {
-        this.getCourse(params['id']);
-      }
+    this.routeSubscription = this.route.params.subscribe((params: Params) => {
+      this.getCourse(params['id']);
     })
   }
 
@@ -77,6 +77,12 @@ export class CourseEditComponent implements OnInit {
     (<FormArray>this.courseForm.get('courseData.authors')).removeAt(authorIndex)
   }
 
+  ngOnDestroy(): void {
+    this.coursesSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.isLoadingSubscription?.unsubscribe();
+  }
+
   private initForm() {
     this.courseForm = new FormGroup({
       'courseData': new FormGroup({
@@ -97,14 +103,5 @@ export class CourseEditComponent implements OnInit {
 
   private getCourse(courseId: string) {
     this.coursesStoreService.getCourse(courseId)
-  }
-
-  callThisShit(author: any) {
-    console.log(author)
-  }
-
-  private initCourse(courseId: string) {
-    // if we reached this page with an id:
-    // this.course = service.getCourseById(id)
   }
 }

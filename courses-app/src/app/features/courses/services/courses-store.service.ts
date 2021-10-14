@@ -29,16 +29,22 @@ export class CoursesStoreService implements OnDestroy {
 
   getCourse(courseId: string): void {
     this._loading$$.next(true);
-    this.coursesService.fetchCourse(courseId).subscribe({
-      next: (course: Course) => {
-        console.log('Course arrived to store: ', course)
-        this._course$$.next(course);
-        this._loading$$.next(false);
-      },
-      error: err => {
-        console.log(err)
-      }
-    })
+
+    if (courseId) {
+      this.coursesService.fetchCourse(courseId).subscribe({
+        next: (course: Course) => {
+          console.log('Course arrived to store: ', course)
+          this._course$$.next(course);
+          this._loading$$.next(false);
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+    } else {
+      this._course$$.next(new Course());
+      this._loading$$.next(false);
+    }
   }
 
   addCourse(course: Course) {
@@ -69,7 +75,7 @@ export class CoursesStoreService implements OnDestroy {
     return Promise.resolve(COURSE_LIST_ACTION_BUTTONS)
   }
 
-  private getAllCourses(): any {
+  public getAllCourses(): any {
     this._loading$$.next(true);
     this.coursesService.fetchAll().subscribe({
       next: (courses: Course[]) => {

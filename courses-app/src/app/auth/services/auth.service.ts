@@ -57,7 +57,7 @@ export class AuthService {
     this.userStoreService.deleteUserState();
     this.router.navigate(['/login'])
     if (withMessage) {
-      this._resultMessage$$.next(new ResultMessage(true, ['Logout success']))
+      this._resultMessage$$.next(new ResultMessage(true, ['Logout successful']))
     }
   }
 

@@ -32,6 +32,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.coursesStoreService.getAllCourses();
+
     this.isAuthorizedSubscription = this.authService.isAuthorized$.subscribe(isAuthorized => {
       this.isAuthorized = isAuthorized;
     })
@@ -70,7 +72,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     if (isModalConfirmed) {
       this.coursesStoreService.deleteCourse(this.clickedCourseId);
     } else {
-      console.log('do nothing')
+      console.log('Modal - do nothing')
     }
   }
 
