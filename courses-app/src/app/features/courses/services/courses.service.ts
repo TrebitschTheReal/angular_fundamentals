@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, map, switchMap} from "rxjs/operators";
+import {catchError, defaultIfEmpty, map, switchMap} from "rxjs/operators";
 import {forkJoin, Observable, of, throwError} from "rxjs";
 import {Course} from "../../../shared/models/course.model";
 import {AuthorsService} from "../../../shared/services/authors/authors.service";
@@ -84,20 +84,34 @@ export class CoursesService {
         }))
   }
 
-  addCourse(course: Course): Observable<any> {
-    return this.http
-      .post<{ successful: boolean, result: Course }>(
-        'http://localhost:3000/courses/add', course)
-      .pipe(
-        catchError(e => {
-          return throwError(e)
-        }),
-        map(e => e.result)
-      )
+  // If the input course has an id, we call the edit endpoint
+  // if there is no id, we call the create endpoint
+  addOrEditCourse(course: Course): Observable<any> {
+    if (course.id) {
+      return this.http
+        .put<{ successful: boolean, result: Course }>(
+          'http://localhost:3000/courses/' + course.id, course)
+        .pipe(
+          catchError(e => {
+            return throwError(e)
+          }),
+          map(e => e.result)
+        )
+    } else {
+      return this.http
+        .post<{ successful: boolean, result: Course }>(
+          'http://localhost:3000/courses/add', course)
+        .pipe(
+          catchError(e => {
+            return throwError(e)
+          }),
+          map(e => e.result)
+        )
+    }
   }
 
   // This is a tricky, dirty solution to serve a bad idea
-  magicCreateCourse(course: Course, authorObservables: Observable<Author>[]): Observable<any> {
+  magicManageCourse(course: Course, authorObservables: Observable<Author>[]): Observable<any> {
     return this.http.get('http://localhost:3000/users/me')
       .pipe(
         switchMap(x =>
@@ -106,6 +120,11 @@ export class CoursesService {
               console.log('1. switchmap - Authors: ', e)
               return e;
             }))
+            .pipe(
+              // Emitting an empty array if the input array is empty
+              // (there are no new authors)
+              defaultIfEmpty(new Array())
+            )
         ),
         switchMap((authors: Author[]) => {
           // at my 'Course' model, the 'authors' field have type 'Author'
@@ -113,9 +132,11 @@ export class CoursesService {
           // i don't understand why the backend works like this (eats only id-s and not whole Author objects)
           // but i would like to strict with the 'clean' way in my app, and work with clean objects as much as i can
           let newCourse = JSON.parse(JSON.stringify(course))
-          newCourse.authors = authors.map((e: Author) => e.id);
+
+          newCourse.authors = newCourse.authors.map((e: Author) => e.id)
+          newCourse.authors = newCourse.authors.concat(authors.map((e: Author) => e.id));
           console.log('2. switchmap - Course: ', newCourse)
-          return this.addCourse(newCourse)
+          return this.addOrEditCourse(newCourse)
         })
       )
   }

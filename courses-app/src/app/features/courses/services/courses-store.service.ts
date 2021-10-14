@@ -6,6 +6,8 @@ import {COURSE_LIST_ACTION_BUTTONS} from "../../../shared/mock/mock-course-card-
 import {AuthorsStoreService} from "../../../shared/services/authors/authors-store.service";
 import {AuthorsService} from "../../../shared/services/authors/authors.service";
 import {Router} from "@angular/router";
+import {ResultMessage} from "../../../shared/models/result-message-model";
+import {Author} from "../../../shared/models/author.model";
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,8 @@ export class CoursesStoreService implements OnDestroy {
   public readonly courses$: Observable<Course[]> = this._courses$$.asObservable()
   private readonly _loading$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly isLoading$: Observable<boolean> = this._loading$$.asObservable()
+  private readonly _resultMessage$$: BehaviorSubject<ResultMessage> = new BehaviorSubject<ResultMessage>(new ResultMessage());
+  public readonly resultMessage$: Observable<ResultMessage> = this._resultMessage$$.asObservable();
 
   constructor(private coursesService: CoursesService,
               private authorsService: AuthorsService,
@@ -53,19 +57,25 @@ export class CoursesStoreService implements OnDestroy {
     }
   }
 
-  public createCourse(course: Course) {
+  public manageCourse(course: Course, newAuthors: Author[]) {
+    this._loading$$.next(true);
     // Creating an array of observables from the authors we want to create
-    let authorObservables = course.authors.map(e => {
+    // The already existing ones with id, are at the course.authors array
+    let authorObservables = newAuthors.map(e => {
       return this.authorsStoreService.createAuthor(e)
     })
 
-    this.coursesService.magicCreateCourse(course, authorObservables).subscribe({
+    this.coursesService.magicManageCourse(course, authorObservables).subscribe({
       next: (course: Course) => {
         console.log('Course arrived after magic creation: ', course)
+        // @TODO
+        // need to trigger courses list update somehow
         this.router.navigate([`courses/edit/${course.id}`]);
+        this._loading$$.next(false);
       },
       error: (error) => {
-        console.log(error)
+        console.log(error.error.errors)
+        this._loading$$.next(false);
       }
     })
   }
@@ -81,11 +91,6 @@ export class CoursesStoreService implements OnDestroy {
       }
     })
   }
-
-  public editCourse(course: Course) {
-
-  }
-
 
   ngOnDestroy() {
     console.log('destroy')

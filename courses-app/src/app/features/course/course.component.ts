@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Course} from "../../shared/models/course.model";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-course',
@@ -8,18 +7,12 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit, OnDestroy {
-  course: Course = new Course();
+  public course: Course = new Course();
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(routeParams => {
-      console.log(routeParams.id)
-      // this.course = need to fetch it from server using an observable
-      // this.course = xyservice.fetchCourse(routeParams.id)
-      // observable.pipe().subscribe........
-    })
   }
 
   ngOnDestroy() {

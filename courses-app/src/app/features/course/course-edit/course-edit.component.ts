@@ -48,11 +48,8 @@ export class CourseEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.prepareCourse();
-
-    this.course.id ?
-      this.coursesStoreService.editCourse(this.course) :
-      this.coursesStoreService.createCourse(this.course)
+    let newAuthors: Author[] = this.prepareCourse();
+    this.coursesStoreService.manageCourse(this.course, newAuthors)
   }
 
   initAuthors() {
@@ -104,7 +101,7 @@ export class CourseEditComponent implements OnInit, OnDestroy {
     })
   }
 
-  private prepareCourse(): void {
+  private prepareCourse(): Author[] {
     this.course.title = this.courseForm.get('courseData.title')?.value;
     this.course.description = this.courseForm.get('courseData.desc')?.value;
     this.course.duration = this.courseForm.get('courseData.duration')?.value;
@@ -114,9 +111,7 @@ export class CourseEditComponent implements OnInit, OnDestroy {
       this.course.authors.filter(e => currentAuthors.includes(e.name)) : [];
     let newAuthors = currentAuthors.filter(e => !this.course.authors.map(e => e.name).includes(e))
 
-    newAuthors.forEach(e => {
-      this.course.authors.push(new Author(undefined, e))
-    })
+    return newAuthors.map(e => new Author(undefined, e))
   }
 
   private getCourse(courseId: string) {
