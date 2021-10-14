@@ -5,6 +5,7 @@ import {authorNameValidationLogic} from "../../../shared/validators/author-name-
 import {ActivatedRoute, Params} from "@angular/router";
 import {CoursesStoreService} from "../../courses/services/courses-store.service";
 import {Subscription} from "rxjs";
+import {Author} from "../../../shared/models/author.model";
 
 @Component({
   selector: 'app-course-edit',
@@ -13,7 +14,7 @@ import {Subscription} from "rxjs";
 })
 export class CourseEditComponent implements OnInit, OnDestroy {
   @Input()
-  course: Course | undefined;
+  course: Course = new Course();
   isLoading: boolean = false;
   courseForm: FormGroup = new FormGroup({
     'courseData': new FormGroup({
@@ -47,9 +48,7 @@ export class CourseEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.courseForm.get('courseData'));
-    console.log(this.course?.id)
-    console.log(this.route.data)
+    this.prepareCourse();
   }
 
   initAuthors() {
@@ -98,6 +97,21 @@ export class CourseEditComponent implements OnInit, OnDestroy {
         ]),
         'authors': new FormArray([]),
       }),
+    })
+  }
+
+  private prepareCourse(): void {
+    this.course.title = this.courseForm.get('courseData.title')?.value;
+    this.course.description = this.courseForm.get('courseData.desc')?.value;
+    this.course.duration = this.courseForm.get('courseData.duration')?.value;
+
+    let currentAuthors = [...this.courseForm.get('courseData.authors')?.value];
+    this.course.authors = this.course.authors ?
+      this.course.authors.filter(e => currentAuthors.includes(e.name)) : [];
+    let newAuthors = currentAuthors.filter(e => !this.course.authors.map(e => e.name).includes(e))
+
+    newAuthors.forEach(e => {
+      this.course.authors.push(new Author(undefined, e))
     })
   }
 

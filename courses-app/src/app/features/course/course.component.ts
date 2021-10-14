@@ -8,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit, OnDestroy {
-  course: Course | undefined;
+  course: Course = new Course();
 
   constructor(private route: ActivatedRoute) {
   }
