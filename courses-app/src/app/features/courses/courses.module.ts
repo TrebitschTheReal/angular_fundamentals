@@ -7,6 +7,8 @@ import {CourseModule} from '../course/course.module';
 import {CourseCardComponent} from './course-card/course-card.component';
 import {CoursesComponent} from './courses.component';
 import {CourseListComponent} from './course-list/course-list.component';
+import {LoginModule} from "../login/login.module";
+import {RegistrationModule} from "../registration/registration.module";
 
 
 @NgModule({
@@ -15,11 +17,13 @@ import {CourseListComponent} from './course-list/course-list.component';
     CourseListComponent,
     CourseCardComponent
   ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    CourseModule
-  ],
+    imports: [
+        SharedModule,
+        CommonModule,
+        CourseModule,
+        LoginModule,
+        RegistrationModule
+    ],
   exports: [
     CoursesComponent,
     CourseListComponent,

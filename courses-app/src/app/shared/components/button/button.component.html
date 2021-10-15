@@ -1,4 +1,6 @@
-<a class="button-common">
+<button class="button-common"
+        [disabled]="disabled"
+        [type]="buttonType">
   {{ buttonText }}
   <i [ngClass]="buttonIcon" aria-hidden="true"></i>
-</a>
+</button>

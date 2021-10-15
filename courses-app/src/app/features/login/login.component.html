@@ -1,1 +1,65 @@
-<p>login works!</p>
+<div class="text-center mx-auto login-container">
+  <div class="login-container-box">
+    <p class="login-container-box-title">Login</p>
+    <form #loginForm="ngForm"
+          (ngSubmit)="onSubmit()"
+          class="mx-auto login-container-box-form">
+      <div #loginData="ngModelGroup"
+           id="login-data"
+           ngModelGroup="loginData">
+        <div [ngClass]="{'error': email.errors && email.touched}"
+             class="login-container-box-form-email">
+          <label class="login-container-box-form-email-label"
+                 for="email">Email</label>
+          <input #email="ngModel"
+                 appEmailValidator
+                 class="login-container-box-form-email-input"
+                 id="email"
+                 name="email"
+                 ngModel
+                 required
+                 type="email">
+          <p *ngIf="email.errors?.required && email.touched"
+             class="error-input-error">Email is
+            required!</p>
+          <p *ngIf="email.errors?.validEmail && email.touched"
+             class="error-input-error">{{email.errors?.validEmail}}</p>
+        </div>
+        <div [ngClass]="{'error': password.errors && password.touched}"
+             class="login-container-box-form-password">
+          <label class="login-container-box-form-password-label"
+                 for="login-password">Password</label>
+          <input #appTogglePassword="togglePassword"
+                 #password="ngModel"
+                 appTogglePassword
+                 class="login-container-box-form-password-input"
+                 id="login-password"
+                 name="password"
+                 ngModel
+                 required
+                 type="password">
+          <app-password-eye (click)="appTogglePassword.toggleInputText()"
+                            [isShown]="appTogglePassword.isShown"
+          ></app-password-eye>
+          <p *ngIf="password.errors?.required && password.touched"
+             class="error-input-error">
+            Password
+            is required!</p>
+        </div>
+        <div class="login-container-box-form-button-container">
+          <app-button *ngIf="loginData.valid; else dummySubmitButton"
+                      [buttonText]="'Login'"
+                      [buttonType]="'submit'"></app-button>
+          <ng-template #dummySubmitButton>
+            <app-button [buttonText]="'Login'" [disabled]="true"></app-button>
+          </ng-template>
+        </div>
+      </div>
+
+    </form>
+    <div class="login-container-box-bottom">
+      <p class="login-container-box-bottom-text">If you don't have an account you can register at</p>
+      <a class="login-container-box-bottom-link" href="#">Registration</a>
+    </div>
+  </div>
+</div>

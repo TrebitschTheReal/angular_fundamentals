@@ -1,0 +1,49 @@
+* {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}
+
+i {
+  font-style: normal;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"], {
+  border: 1px solid var(--orange);
+}
+
+textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--sand_color);
+}
+
+button {
+  border: 2px solid purple;
+}
+
+.error {
+  color: var(--danger);
+
+  &-input-error {
+    display: block;
+    margin: 0;
+  }
+}
+
+p.ng-invalid.ng-touched {
+  color: var(--danger);
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid var(--danger);
+}
+
+input.ng-invalid.ng-touched:focus,
+textarea.ng-invalid.ng-touched:focus {
+  background: #FFCCCC;
+}

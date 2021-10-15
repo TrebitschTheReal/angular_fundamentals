@@ -34,4 +34,8 @@ export class CoursesComponent implements OnInit {
       console.log('do nothing')
     }
   }
+
+  onSearchButtonClicked(searchSlug: string) {
+    console.log('search button clicked! Filter:', searchSlug)
+  }
 }

@@ -1,0 +1,23 @@
+.search-container {
+  border: 2px solid var(--light_blue);
+  padding: 1.6rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  &-box {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    &-form {
+      display: flex;
+      justify-content: space-between;
+
+      &-input {
+        outline: none;
+        width: 80%;
+        font-size: 16px;
+        padding-left: 1rem;
+      }
+    }
+  }
+}

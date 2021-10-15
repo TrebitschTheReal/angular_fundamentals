@@ -1,1 +1,81 @@
-<p>registration works!</p>
+<div class="text-center mx-auto registration-container">
+  <div class="registration-container-box">
+    <p class="registration-container-box-title">Registration</p>
+    <form (ngSubmit)="onSubmit()"
+          [formGroup]="registrationForm"
+          class="mx-auto registration-container-box-form">
+      <div formGroupName="registrationData">
+        <div [ngClass]="{'error': this.registrationForm.get('registrationData.name')?.errors &&
+             this.registrationForm.get('registrationData.name')?.touched}"
+             class="registration-container-box-form-name">
+          <label class="registration-container-box-form-name-label"
+                 for="name">Name</label>
+          <input class="registration-container-box-form-name-input"
+                 formControlName="name"
+                 id="name"
+                 name="name"
+                 type="text">
+          <p *ngIf="registrationForm.get('registrationData.name')?.touched &&
+          this.registrationForm.get('registrationData.name')?.errors?.required"
+             class="error-input-error">Name is
+            required!</p>
+          <p *ngIf="registrationForm.get('registrationData.name')?.touched &&
+          this.registrationForm.get('registrationData.name')?.errors?.minlength"
+             class="error-input-error">Name is
+            invalid!</p>
+        </div>
+        <div [ngClass]="{'error': this.registrationForm.get('registrationData.email')?.errors &&
+         this.registrationForm.get('registrationData.email')?.touched}" class="registration-container-box-form-email">
+          <label class="registration-container-box-form-email-label"
+                 for="email">Email</label>
+          <input class="registration-container-box-form-email-input"
+                 formControlName="email"
+                 id="email"
+                 name="email"
+                 type="email">
+          <p *ngIf="registrationForm.get('registrationData.email')?.touched &&
+          this.registrationForm.get('registrationData.email')?.errors?.required"
+             class="error-input-error">Email is
+            required!</p>
+          <p *ngIf="registrationForm.get('registrationData.email')?.touched &&
+          this.registrationForm.get('registrationData.email')?.errors"
+             class="error-input-error">{{this.registrationForm.get('registrationData.email')?.errors?.validEmail}}</p>
+        </div>
+        <div [ngClass]="{'error': this.registrationForm.get('registrationData.password')?.errors &&
+             this.registrationForm.get('registrationData.password')?.touched}"
+             class="registration-container-box-form-password">
+          <label class="registration-container-box-form-password-label"
+                 for="registration-password">Password</label>
+          <input #appTogglePassword="togglePassword"
+                 appTogglePassword
+                 class="registration-container-box-form-password-input"
+                 formControlName="password"
+                 id="registration-password"
+                 name="password"
+                 type="password">
+          <app-password-eye (click)="appTogglePassword.toggleInputText()"
+                            [isShown]="appTogglePassword.isShown"
+          ></app-password-eye>
+          <p *ngIf="registrationForm.get('registrationData.password')?.touched &&
+          this.registrationForm.get('registrationData.password')?.errors?.required"
+             class="registration-container-box-form-input-error">
+            Password is required!</p>
+        </div>
+        <div class="registration-container-box-form-button-container">
+          <app-button *ngIf="registrationForm.valid; else dummySubmitButton"
+                      [buttonText]="'Registration'"
+                      [buttonType]="'submit'"></app-button>
+          <ng-template #dummySubmitButton>
+            <app-button [buttonText]="'Registration'" [disabled]="true"></app-button>
+          </ng-template>
+        </div>
+      </div>
+
+    </form>
+    <div class="registration-container-box-bottom">
+      <p class="registration-container-box-bottom-text">If you already have an account please</p>
+      <a class="registration-container-box-bottom-link"
+         href="#">Login</a>
+    </div>
+  </div>
+</div>

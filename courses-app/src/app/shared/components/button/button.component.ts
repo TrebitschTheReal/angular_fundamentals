@@ -12,6 +12,12 @@ export class ButtonComponent implements OnInit {
   @Input()
   public buttonIcon: string = '';
 
+  @Input()
+  public buttonType: string = 'button';
+
+  @Input()
+  public disabled: boolean | null = false;
+
   constructor() {
   }
 

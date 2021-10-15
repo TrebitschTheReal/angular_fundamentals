@@ -13,11 +13,11 @@
         </div>
         <div class="col-9 course-card-inner-data-content">
           <p
-            class="course-card-inner-data-content-author-content">{{ courseElement.authors }}</p>
+            class="course-card-inner-data-content-author-content">{{ courseElement.authors | stringJoiner: ', ' }}</p>
           <p
             class="course-card-inner-data-content-duration-content">{{ courseElement.duration | minutes }}</p>
           <p
-            class="course-card-inner-data-content-created-content">{{ courseElement.creationDate | date: 'dd.mm.YYYY' }}</p>
+            class="course-card-inner-data-content-created-content">{{ courseElement.creationDate | date: 'dd.MM.YYYY' }}</p>
         </div>
       </div>
 
