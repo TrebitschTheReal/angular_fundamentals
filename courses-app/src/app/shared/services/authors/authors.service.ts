@@ -20,7 +20,7 @@ export class AuthorsService {
       )
   }
 
-  addAuthor(author: Author): Observable<any> {
+  addAuthor(author: Author): Observable<Author> {
     return this.http
       .post<{ successful: boolean, result: Author }>(
         'http://localhost:3000/authors/add', author)
@@ -28,7 +28,7 @@ export class AuthorsService {
         catchError(e => {
           return throwError(e)
         }),
-        map(e => e.result)
+        map(e => e.result),
       )
   }
 }

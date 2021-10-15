@@ -26,8 +26,8 @@
     <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
                        *ngIf="modalShow"
                        [cancelButtonText]="'CANCEL'"
-                       [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
-                       [okButtonText]="'OK'"
+                       [message]="'Are you sure want to delete this course?'"
+                       [okButtonText]="'DELETE'"
                        [title]="'Are you sure?'"
     ></app-confirm-modal>
   </ng-template>

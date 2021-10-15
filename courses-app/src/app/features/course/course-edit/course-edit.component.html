@@ -15,10 +15,10 @@
                    name="title"
                    type="text">
             <app-button *ngIf="courseForm.valid; else dummySubmitButton"
-                        [buttonText]="'Create course'"
+                        [buttonText]="buttonText"
                         [buttonType]="'submit'"></app-button>
             <ng-template #dummySubmitButton>
-              <app-button [buttonText]="'Create course'" [disabled]="true"></app-button>
+              <app-button [buttonText]="buttonText" [disabled]="true"></app-button>
             </ng-template>
           </div>
           <p *ngIf="courseForm.get('courseData.title')?.touched &&

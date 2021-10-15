@@ -26,7 +26,6 @@ export class CoursesStoreService implements OnDestroy {
               private authorsService: AuthorsService,
               private router: Router,
               private authorsStoreService: AuthorsStoreService) {
-    this.getAllCourses();
   }
 
   get courses(): Course[] {
@@ -68,8 +67,7 @@ export class CoursesStoreService implements OnDestroy {
     this.coursesService.magicManageCourse(course, authorObservables).subscribe({
       next: (course: Course) => {
         console.log('Course arrived after magic creation: ', course)
-        // @TODO
-        // need to trigger courses list update somehow
+        this.getAllCourses();
         this.router.navigate([`courses/edit/${course.id}`]);
         this._loading$$.next(false);
       },

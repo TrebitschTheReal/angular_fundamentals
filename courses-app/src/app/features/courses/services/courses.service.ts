@@ -25,9 +25,7 @@ export class CoursesService {
             courses: of(coursesData).pipe(
               map((e) => e.result)
             ),
-            authors: this.authorService.fetchAll().pipe(
-              map((a) => a)
-            ),
+            authors: this.authorService.fetchAll(),
           }).pipe(
             map(e => {
               return e.courses.map(course => {
@@ -50,9 +48,9 @@ export class CoursesService {
       .get<{ successful: boolean, result: Course }>(
         'http://localhost:3000/courses/' + id)
       .pipe(
-        switchMap(coursesData =>
+        switchMap(courseData =>
           forkJoin({
-            course: of(coursesData).pipe(
+            course: of(courseData).pipe(
               map((e) => e.result)
             ),
             authors: this.authorService.fetchAll().pipe(
@@ -86,7 +84,7 @@ export class CoursesService {
 
   // If the input course has an id, we call the edit endpoint
   // if there is no id, we call the create endpoint
-  addOrEditCourse(course: Course): Observable<any> {
+  addOrEditCourse(course: Course): Observable<Course> {
     if (course.id) {
       return this.http
         .put<{ successful: boolean, result: Course }>(
@@ -111,7 +109,7 @@ export class CoursesService {
   }
 
   // This is a tricky, dirty solution to serve a bad idea
-  magicManageCourse(course: Course, authorObservables: Observable<Author>[]): Observable<any> {
+  magicManageCourse(course: Course, authorObservables: Observable<Author>[]): Observable<Course> {
     return this.http.get('http://localhost:3000/users/me')
       .pipe(
         switchMap(x =>
@@ -137,7 +135,7 @@ export class CoursesService {
           newCourse.authors = newCourse.authors.concat(authors.map((e: Author) => e.id));
           console.log('2. switchmap - Course: ', newCourse)
           return this.addOrEditCourse(newCourse)
-        })
+        }),
       )
   }
 }

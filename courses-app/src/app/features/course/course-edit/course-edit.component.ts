@@ -13,6 +13,7 @@ import {Author} from "../../../shared/models/author.model";
   styleUrls: ['./course-edit.component.scss']
 })
 export class CourseEditComponent implements OnInit, OnDestroy {
+  public buttonText: string = 'Create course';
   @Input()
   course: Course = new Course();
   isLoading: boolean = false;
@@ -37,6 +38,8 @@ export class CourseEditComponent implements OnInit, OnDestroy {
     })
 
     this.coursesSubscription = this.coursesStoreService.course$.subscribe(course => {
+      this.buttonText = course.id ?
+        'Edit course' : 'Create course';
       this.course = course;
       this.initForm();
       this.initAuthors();

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from "rxjs/operators";
 import {UserService} from "../user/user.service";
@@ -21,9 +21,14 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     }
 
     return next.handle(modifiedReq).pipe(
-      catchError(e => {
-        console.log('Error from interceptor ', e)
-        return throwError(e);
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 403 || err.status === 401) {
+          console.log('Error from interceptor: no trespassing');
+          // @ TODO fixme
+          // call logout ?
+        }
+        console.log('Error from interceptor: ', err)
+        return throwError(err);
       })
     );
 
