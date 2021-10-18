@@ -1,29 +1,38 @@
-<app-search (searchButtonClicked)="onSearchButtonClicked($event)"
-            [placeholder]="'Type something'"
-></app-search>
-<app-course></app-course>
-<app-registration></app-registration>
-<app-login></app-login>
+<section *ngIf="route.children.length === 0"
+         class="container">
+  <app-search (searchButtonClicked)="onSearchButtonClicked($event)"
+              [placeholder]="'Type something'"
+  ></app-search>
+  <app-button *ngIf="isAdmin && courses.length"
+              [buttonText]="'Add new course'"
+              [routerLink]="['new']"
 
-
-<section class="courses-container">
-  <app-info [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"
-            [infoBoxHeading]="'Your list is empty'"
-            class="info-box">
-    <app-button [buttonText]="'Add new course'" addNewCourseInfoButton></app-button>
-  </app-info>
-  <app-info [infoBoxContent]="'Try to delete one of the courses, also please watch the console too!'"
-            [infoBoxHeading]="'How to try out the modal?'"
-            class="info-box">
-  </app-info>
-  <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
-                   [courses]="courses"></app-course-list>
-  <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
-                     *ngIf="somethingHappened"
-                     [cancelButtonText]="'CANCEL'"
-                     [message]="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam blanditiis corporis cum expedita minus nemo quaerat quas voluptatum.'"
-                     [okButtonText]="'OK'"
-                     [title]="'Are you sure?'"
-  ></app-confirm-modal>
+  ></app-button>
+  <ng-template #emptyInfo>
+    <app-info
+      [infoBoxContent]="'Please use the \'Add new course\' button to add your first course'"
+      [infoBoxHeading]="'Your list is empty'"
+      class="info-box">
+      <app-button [buttonText]="'Add new course'"
+                  [routerLink]="['/courses/new']"
+                  addNewCourseInfoButton></app-button>
+    </app-info>
+  </ng-template>
+  <div *ngIf="isLoading; else courseList" class="big spinner-border" role="status"></div>
+  <ng-template #courseList>
+    <app-course-list (courseCardActionButtonClicked)="actionButtonClicked($event)"
+                     *ngIf="courses.length; else emptyInfo"
+                     [courses]="courses"></app-course-list>
+    <app-confirm-modal (onModalButtonClicked)="modalClicked($event)"
+                       *ngIf="modalShow"
+                       [cancelButtonText]="'CANCEL'"
+                       [message]="'Are you sure want to delete this course?'"
+                       [okButtonText]="'DELETE'"
+                       [title]="'Are you sure?'"
+    ></app-confirm-modal>
+  </ng-template>
+</section>
+<section class="container">
+  <router-outlet></router-outlet>
 </section>
 

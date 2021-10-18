@@ -1,0 +1,13 @@
+<ng-container *ngIf="resultMessages">
+  <div class="col-12">
+    <div class="row">
+      <ng-container *ngFor="let message of resultMessages.messages; let i = index">
+        <p (click)="resultMessages.messages.splice(i, 1)"
+           [class]="resultMessages.successful ? 'alert-success' : 'alert-danger'"
+           class="pointer alert px-2 m-2">
+          {{ message }}
+        </p>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

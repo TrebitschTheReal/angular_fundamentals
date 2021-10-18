@@ -59,7 +59,15 @@
     </form>
     <div class="login-container-box-bottom">
       <p class="login-container-box-bottom-text">If you don't have an account you can register at</p>
-      <a class="login-container-box-bottom-link" href="#">Registration</a>
+      <a [routerLink]="['/registration']" class="login-container-box-bottom-link">Registration</a>
     </div>
+  </div>
+  <div class="row">
+    <ng-container *ngIf="isLoading; else errorMessages">
+      <app-spinner [bigSpinner]="false"></app-spinner>
+    </ng-container>
+    <ng-template #errorMessages>
+      <app-result-message [resultMessages]="resultMessages"></app-result-message>
+    </ng-template>
   </div>
 </div>

@@ -1,107 +1,110 @@
 <div class="course-edit-container">
-  <form (ngSubmit)="onSubmit()"
-        [formGroup]="courseForm"
-        class="course-edit-container-form">
-    <div formGroupName="courseData">
-      <div [ngClass]="{'error': courseForm.get('courseData.title')?.touched &&
+  <app-spinner *ngIf="isLoading; else courseFormBox"></app-spinner>
+  <ng-template #courseFormBox>
+    <form (ngSubmit)="onSubmit()"
+          [formGroup]="courseForm"
+          class="course-edit-container-form">
+      <div formGroupName="courseData">
+        <div [ngClass]="{'error': courseForm.get('courseData.title')?.touched &&
           courseForm.get('courseData.title')?.errors}">
-        <label for="title">Title</label>
-        <div
-          class="course-edit-container-form-title-box">
-          <input formControlName="title"
-                 id="title"
-                 name="title"
-                 type="text">
-          <app-button *ngIf="courseForm.valid; else dummySubmitButton"
-                      [buttonText]="'Create course'"
-                      [buttonType]="'submit'"></app-button>
-          <ng-template #dummySubmitButton>
-            <app-button [buttonText]="'Create course'" [disabled]="true"></app-button>
-          </ng-template>
-        </div>
-        <p *ngIf="courseForm.get('courseData.title')?.touched &&
+          <label for="title">Title</label>
+          <div
+            class="course-edit-container-form-title-box">
+            <input formControlName="title"
+                   id="title"
+                   name="title"
+                   type="text">
+            <app-button *ngIf="courseForm.valid; else dummySubmitButton"
+                        [buttonText]="buttonText"
+                        [buttonType]="'submit'"></app-button>
+            <ng-template #dummySubmitButton>
+              <app-button [buttonText]="buttonText" [disabled]="true"></app-button>
+            </ng-template>
+          </div>
+          <p *ngIf="courseForm.get('courseData.title')?.touched &&
           courseForm.get('courseData.title')?.errors?.required"
-           class="error-input-error">Title is
-          required!</p>
-      </div>
-      <div [ngClass]="{'error': courseForm.get('courseData.desc')?.touched &&
+             class="error-input-error">Title is
+            required!</p>
+        </div>
+        <div [ngClass]="{'error': courseForm.get('courseData.desc')?.touched &&
           courseForm.get('courseData.desc')?.errors}">
-        <label for="desc">Description</label>
-        <div class="course-edit-container-form-desc-box">
+          <label for="desc">Description</label>
+          <div class="course-edit-container-form-desc-box">
         <textarea formControlName="desc"
                   id="desc"
                   name="desc"
                   type="textarea"></textarea>
-        </div>
-        <p *ngIf="courseForm.get('courseData.desc')?.touched &&
+          </div>
+          <p *ngIf="courseForm.get('courseData.desc')?.touched &&
           courseForm.get('courseData.desc')?.errors?.required"
-           class="error-input-error">Description is
-          required!</p>
-      </div>
-      <div [ngClass]="{'error': courseForm.get('courseData.duration')?.touched &&
-          courseForm.get('courseData.duration')?.errors}">
-        <label for="duration">Duration (in minutes)</label>
-        <div class="course-edit-container-form-duration_box">
-          <input formControlName="duration"
-                 id="duration"
-                 name="duration"
-                 type="number">
-          <span>Duration: {{this.courseForm.get('courseData.duration')?.value | minutes}}</span>
+             class="error-input-error">Description is
+            required!</p>
         </div>
-        <p *ngIf="courseForm.get('courseData.duration')?.touched &&
+        <div [ngClass]="{'error': courseForm.get('courseData.duration')?.touched &&
+          courseForm.get('courseData.duration')?.errors}">
+          <label for="duration">Duration (in minutes)</label>
+          <div class="course-edit-container-form-duration_box">
+            <input formControlName="duration"
+                   id="duration"
+                   name="duration"
+                   type="number">
+            <span>Duration: {{this.courseForm.get('courseData.duration')?.value | minutes}}</span>
+          </div>
+          <p *ngIf="courseForm.get('courseData.duration')?.touched &&
           courseForm.get('courseData.duration')?.errors?.required"
-           class="error-input-error">Duration is
-          required!</p>
-        <p *ngIf="courseForm.get('courseData.duration')?.touched &&
+             class="error-input-error">Duration is
+            required!</p>
+          <p *ngIf="courseForm.get('courseData.duration')?.touched &&
           courseForm.get('courseData.duration')?.errors?.min"
-           class="error-input-error">Duration have to be at least 1 min!</p>
-        <p *ngIf="courseForm.get('courseData.duration')?.touched &&
+             class="error-input-error">Duration have to be at least 1 min!</p>
+          <p *ngIf="courseForm.get('courseData.duration')?.touched &&
           courseForm.get('courseData.duration')?.errors?.max"
-           class="error-input-error">The maximum of the course length is 200 hours!</p>
-      </div>
-      <div class="course-edit-container-form-authors">
-        <div class="course-edit-container-form-authors-left_side">
-          <p>Add authors</p>
-          <div [ngClass]="{'error': courseForm.get('courseData.newAuthor')?.dirty &&
+             class="error-input-error">The maximum of the course length is 200 hours!</p>
+        </div>
+        <div class="course-edit-container-form-authors">
+          <div class="course-edit-container-form-authors-left_side">
+            <p>Add authors</p>
+            <div [ngClass]="{'error': courseForm.get('courseData.newAuthor')?.dirty &&
           courseForm.get('courseData.newAuthor')?.errors && courseForm.get('courseData.newAuthor')?.value}">
-            <label for="newAuthor">Author name</label>
-            <div class="course-edit-container-form-authors-left_side-author-box">
-              <input formControlName="newAuthor"
-                     id="newAuthor"
-                     name="newAuthor"
-                     type="text">
-            </div>
-            <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
+              <label for="newAuthor">Author name</label>
+              <div class="course-edit-container-form-authors-left_side-author-box">
+                <input formControlName="newAuthor"
+                       id="newAuthor"
+                       name="newAuthor"
+                       type="text">
+              </div>
+              <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
           courseForm.get('courseData.newAuthor')?.errors?.validAuthorName &&
            courseForm.get('courseData.newAuthor')?.value"
-                  class="error-input-error">{{courseForm.get('courseData.newAuthor')?.errors?.validAuthorName}}</span>
-            <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
+                    class="error-input-error">{{courseForm.get('courseData.newAuthor')?.errors?.validAuthorName}}</span>
+              <span *ngIf="courseForm.get('courseData.newAuthor')?.dirty &&
           courseForm.get('courseData.newAuthor')?.errors?.maxlength &&
            courseForm.get('courseData.newAuthor')?.value"
-                  class="error-input-error">Author name is too long!</span>
-          </div>
-          <app-button (click)="addAuthor()"
-                      *ngIf="courseForm.get('courseData.newAuthor')?.valid &&
+                    class="error-input-error">Author name is too long!</span>
+            </div>
+            <app-button (click)="addAuthor()"
+                        *ngIf="courseForm.get('courseData.newAuthor')?.valid &&
                       courseForm.get('courseData.newAuthor')?.value; else dummyButton"
-                      [buttonText]="'Add author'"></app-button>
-          <ng-template #dummyButton>
-            <app-button [buttonText]="'Add author'" [disabled]="true"></app-button>
-          </ng-template>
-        </div>
-        <div class="course-edit-container-form-authors-right_side">
-          <p>Authors list</p>
-          <div class="course-edit-container-form-authors-right_side-author_list_box">
-            <div *ngFor="let author of getMyFormArrayControls(); let i = index"
-                 class="course-edit-container-form-authors-right_side-author_list_box-element"
-                 formArrayName="authors">
-              <div [formGroupName]="i">
-                <span class="">{{author.value}}</span>
-                <app-button (click)="removeAuthor(i)" [buttonText]="'Remove author'"></app-button>
+                        [buttonText]="'Add author'"></app-button>
+            <ng-template #dummyButton>
+              <app-button [buttonText]="'Add author'" [disabled]="true"></app-button>
+            </ng-template>
+          </div>
+          <div class="course-edit-container-form-authors-right_side">
+            <p>Authors list</p>
+            <div class="course-edit-container-form-authors-right_side-author_list_box">
+              <div *ngFor="let author of getMyFormArrayControls(); let i = index"
+                   class="course-edit-container-form-authors-right_side-author_list_box-element"
+                   formArrayName="authors">
+                <div [formGroupName]="i">
+                  <span class="">{{author.value}}</span>
+                  <app-button (click)="removeAuthor(i)" [buttonText]="'Remove author'"></app-button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </ng-template>
 </div>

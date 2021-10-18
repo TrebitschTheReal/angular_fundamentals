@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Course} from '../shared/course.model';
+import {Course} from '../../../shared/models/course.model';
 
 @Component({
   selector: 'app-course-card',
@@ -11,10 +11,13 @@ export class CourseCardComponent implements OnInit {
   @Input()
   public courseElement: Course = new Course();
 
+  courseAuthors: string[] = []
+
   constructor() {
   }
 
   ngOnInit(): void {
+    this.courseAuthors = this.courseElement.authors.map(e => e.name)
   }
 
 }

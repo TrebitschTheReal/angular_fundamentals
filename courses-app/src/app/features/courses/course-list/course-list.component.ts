@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ICourseCardActionButton} from '../shared/course-card-action-buttons-model';
-import {Course} from '../shared/course.model';
-import {CourseService} from '../shared/course.service';
+import {ICourseCardActionButton} from '../../../shared/models/course-card-action-buttons-model';
+import {Course} from '../../../shared/models/course.model';
+import {CoursesStoreService} from "../services/courses-store.service";
+import {UserStoreService} from "../../../user/user-store.service";
 
 @Component({
   selector: 'app-course-list',
@@ -9,6 +10,7 @@ import {CourseService} from '../shared/course.service';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit {
+  isAdmin: boolean = false;
 
   @Input()
   public courses: Course[] = [];
@@ -21,11 +23,16 @@ export class CourseListComponent implements OnInit {
 
   public courseCardActionButtons: ICourseCardActionButton[] = [];
 
-  constructor(private courseService: CourseService) {
+  constructor(private coursesStoreService: CoursesStoreService,
+              private userStoreService: UserStoreService) {
   }
 
   ngOnInit(): void {
-    this.courseService.getCourseCardActionButtons().then((courseCardActionButtons: ICourseCardActionButton[]) => {
+    this.userStoreService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin
+    })
+
+    this.coursesStoreService.getCourseCardActionButtons().then((courseCardActionButtons: ICourseCardActionButton[]) => {
       this.courseCardActionButtons = courseCardActionButtons;
     });
   }

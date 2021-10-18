@@ -1,9 +1,8 @@
 <app-course-card *ngFor="let course of courses; index as i" [courseElement]="course">
   <ng-container courseCardActionButtons>
-    <app-button (click)="onCourseCardActionButtonClicked('show', course)" [buttonText]="'Show course'"></app-button>
-    <ng-container *ngIf="i % 2 === 0">
+    <ng-container *ngFor="let button of courseCardActionButtons">
       <app-button (click)="onCourseCardActionButtonClicked(button.type, course)"
-                  *ngFor="let button of courseCardActionButtons"
+                  *ngIf="button.admin === isAdmin || isAdmin"
                   [buttonIcon]="button.buttonIcon" [buttonText]="button.buttonText"></app-button>
     </ng-container>
   </ng-container>

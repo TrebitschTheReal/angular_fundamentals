@@ -1,9 +1,6 @@
 <div class="courses-main-content">
-  <app-header>
-    <span userNameHeader>{{'Dave'}}</span>
-    <app-button [buttonIcon]="'fa fa-sign-out'" [buttonText]="'Logout'" headerLogoutButton></app-button>
-  </app-header>
+  <app-header></app-header>
   <div class="container">
-    <app-courses></app-courses>
+    <router-outlet></router-outlet>
   </div>
 </div>
