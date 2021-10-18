@@ -6,6 +6,7 @@ import {UserStoreService} from "../../user/user-store.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
 import {ResultMessage} from "../../shared/models/result-message-model";
+import {finalize} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -52,13 +53,21 @@ export class AuthService {
   }
 
   logout(withMessage?: boolean) {
+    this._loading$$.next(true);
+
     this._authorized$$.next(false);
-    this.sessionStorageService.deleteToken();
     this.userStoreService.deleteUserState();
     this.router.navigate(['/login'])
-    if (withMessage) {
-      this._resultMessage$$.next(new ResultMessage(true, ['Logout successful']))
-    }
+
+    this.http.delete('http://localhost:3000/logout').pipe(
+      finalize(() => {
+        this.sessionStorageService.deleteToken();
+        if (withMessage) {
+          this._resultMessage$$.next(new ResultMessage(true, ['Logout successful']))
+        }
+        this._loading$$.next(false);
+      })
+    ).subscribe()
   }
 
   register(user: { name: string, email: string, password: string }): void {
