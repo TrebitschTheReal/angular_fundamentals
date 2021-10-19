@@ -14,8 +14,6 @@ import {finalize} from "rxjs/operators";
 export class AuthService {
   private readonly _authorized$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly isAuthorized$: Observable<boolean> = this._authorized$$.asObservable();
-  private readonly _requestBlock$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public readonly isRequestBlocked$: Observable<any> = this._requestBlock$$.asObservable();
   private readonly _resultMessage$$: BehaviorSubject<ResultMessage> = new BehaviorSubject<ResultMessage>(new ResultMessage());
   public readonly resultMessage$: Observable<ResultMessage> = this._resultMessage$$.asObservable();
 
@@ -31,25 +29,22 @@ export class AuthService {
   }
 
   login(user: { email: string, password: string }): void {
-    if (!this._requestBlock$$.getValue()) {
-      this.blockLoginTemporary(3000);
-      this._loading$$.next(true);
+    this._loading$$.next(true);
 
-      this.userStoreService.signInAndSetUserSession(user)
-        .subscribe({
-          next: (resultLoginPack: any) => {
-            console.log('Result loginPack in auth service: ', resultLoginPack)
-            this._authorized$$.next(true);
-            this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
-            this._loading$$.next(false);
-          },
-          error: err => {
-            console.log('Error login at subscribe - auth-service', err)
-            this._resultMessage$$.next(new ResultMessage(false, err))
-            this._loading$$.next(false);
-          }
-        })
-    }
+    this.userStoreService.signInAndSetUserSession(user)
+      .subscribe({
+        next: (resultLoginPack: any) => {
+          console.log('Result loginPack in auth service: ', resultLoginPack)
+          this._authorized$$.next(true);
+          this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
+          this._loading$$.next(false);
+        },
+        error: err => {
+          console.log('Error login at subscribe - auth-service', err)
+          this._resultMessage$$.next(new ResultMessage(false, err))
+          this._loading$$.next(false);
+        }
+      })
   }
 
   logout(withMessage?: boolean) {
@@ -106,12 +101,5 @@ export class AuthService {
         },
       })
     }
-  }
-
-  private blockLoginTemporary(blockTime: number): void {
-    this._requestBlock$$.next(true);
-    setTimeout(() => {
-      this._requestBlock$$.next(false)
-    }, blockTime)
   }
 }
