@@ -17,7 +17,10 @@ export class UserService {
     return this.http
       .get<{ successful: boolean, result: User }>('http://localhost:3000/users/me')
       .pipe(
-        map(e => e.result)
+        map(e => e.result),
+        catchError((err: HttpErrorResponse) => {
+          return throwError([err.error.error])
+        })
       )
   }
 
