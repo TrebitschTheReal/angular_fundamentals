@@ -4,6 +4,7 @@ import {AuthService} from "../../auth/services/auth.service";
 import {Router} from "@angular/router";
 import {ResultMessage} from "../../shared/models/result-message-model";
 import {Subscription} from "rxjs";
+import {AuthStateFacade} from "../../auth/store/auth.facade";
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private isAuthorizedSubscription: Subscription | undefined;
 
   constructor(private authService: AuthService,
+              private authState: AuthStateFacade,
               private router: Router) {
   }
 
@@ -53,7 +55,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.loginData?.control.controls.password.value
     }
 
-    this.authService.login(user);
+    this.authState.login(user);
+    //this.authService.login(user);
   }
 
   ngOnDestroy() {

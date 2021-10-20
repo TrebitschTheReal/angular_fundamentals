@@ -79,7 +79,7 @@
     </div>
   </div>
   <div class="row">
-    <ng-container *ngIf="isLoading; else errorMessages">
+    <ng-container *ngIf="authState.$isLoading | async; else errorMessages">
       <app-spinner [bigSpinner]="false"></app-spinner>
     </ng-container>
     <ng-template #errorMessages>

@@ -41,10 +41,14 @@ export class UserService {
             // With the token, now we can fetch the user data too
             user: this.fetchUser()
           }).pipe(
-            map(resultPack => {
+            map((resultPack: { token: string, user: User }) => {
               // We sending back the whole login pack
               return resultPack;
-            })
+            }),
+            catchError((error: HttpErrorResponse) => {
+              console.log('pure error login: ', error.error)
+              return throwError(error.error)
+            }),
           )
         )
       )
