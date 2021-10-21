@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserStoreService} from "../../../user/user-store.service";
 import {AuthService} from "../../../auth/services/auth.service";
+import {UserStateFacade} from "../../../user/store/user.facade";
+import {AuthStateFacade} from "../../../auth/store/auth.facade";
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,8 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(private userStoreService: UserStoreService,
+              public userStateFacade: UserStateFacade,
+              public authStateFacade: AuthStateFacade,
               private authService: AuthService) {
   }
 
@@ -29,6 +33,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout(true);
+    this.authStateFacade.logout();
   }
 }

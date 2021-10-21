@@ -30,20 +30,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.resultMessagesSubscription = this.authService.resultMessage$.subscribe(result => {
-      console.log('login', result)
-      this.resultMessages = result;
-    })
-
-    this.isLoadingSubscription = this.authService.isLoading$.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    })
-
-    this.isAuthorizedSubscription = this.authService.isAuthorized$.subscribe(isAuth => {
-      if (isAuth) {
-        this.router.navigate(['/courses'])
-      }
-    })
+    // this.resultMessagesSubscription = this.authService.resultMessage$.subscribe(result => {
+    //   console.log('login', result)
+    //   this.resultMessages = result;
+    // })
+    //
+    // this.isLoadingSubscription = this.authService.isLoading$.subscribe(isLoading => {
+    //   this.isLoading = isLoading;
+    // })
+    //
+    // this.isAuthorizedSubscription = this.authService.isAuthorized$.subscribe(isAuth => {
+    //   if (isAuth) {
+    //     this.router.navigate(['/courses'])
+    //   }
+    // })
   }
 
 

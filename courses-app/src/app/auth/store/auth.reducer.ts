@@ -30,6 +30,7 @@ export function authReducer(
       return {
         ...state,
         token: action.payload.token,
+        isAuthorized: true,
         isLoading: false
       };
     case AuthActions.REQUEST_LOGIN_FAIL:
@@ -64,13 +65,32 @@ export function authReducer(
       return {
         ...state,
         isLoading: false,
+        isAuthorized: false,
         result: action.payload.result
       };
     case AuthActions.REQUEST_LOGOUT_FAIL:
       return {
         ...state,
         isLoading: false,
+        isAuthorized: false,
         errors: action.payload.errors
+      };
+    case AuthActions.REQUEST_AUTO_LOGIN_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case AuthActions.REQUEST_AUTO_LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthorized: true,
+      };
+    case AuthActions.REQUEST_AUTO_LOGIN_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthorized: false,
       };
     default:
       return state;

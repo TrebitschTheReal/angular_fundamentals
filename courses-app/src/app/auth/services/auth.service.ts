@@ -6,7 +6,6 @@ import {UserStoreService} from "../../user/user-store.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
 import {ResultMessage} from "../../shared/models/result-message-model";
-import {finalize} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -29,44 +28,36 @@ export class AuthService {
   }
 
   login(user: { email: string, password: string }): void {
-    this._loading$$.next(true);
-
-    this.userStoreService.signInAndSetUserSession(user)
-      .subscribe({
-        next: (resultLoginPack: any) => {
-          console.log('Result loginPack in auth service: ', resultLoginPack)
-          this._authorized$$.next(true);
-          this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
-          this._loading$$.next(false);
-        },
-        error: err => {
-          console.log('Error login at subscribe - auth-service', err)
-          this._resultMessage$$.next(new ResultMessage(false, err))
-          this._loading$$.next(false);
-        }
-      })
+    // this._loading$$.next(true);
+    //
+    // this.userStoreService.signInAndSetUserSession(user)
+    //   .subscribe({
+    //     next: (resultLoginPack: any) => {
+    //       console.log('Result loginPack in auth service: ', resultLoginPack)
+    //       this._authorized$$.next(true);
+    //       this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
+    //       this._loading$$.next(false);
+    //     },
+    //     error: err => {
+    //       console.log('Error login at subscribe - auth-service', err)
+    //       this._resultMessage$$.next(new ResultMessage(false, err))
+    //       this._loading$$.next(false);
+    //     }
+    //   })
   }
 
-  logout(withMessage?: boolean) {
-    this._loading$$.next(true);
+  logout(withMessage?: boolean): Observable<any> {
+    // this._loading$$.next(true);
+    //
+    // this._authorized$$.next(false);
+    // this.userStoreService.deleteUserState();
+    // this.router.navigate(['/login'])
 
-    this._authorized$$.next(false);
-    this.userStoreService.deleteUserState();
-    this.router.navigate(['/login'])
-
-    this.http.delete('http://localhost:3000/logout').pipe(
-      finalize(() => {
-        this.sessionStorageService.deleteToken();
-        if (withMessage) {
-          this._resultMessage$$.next(new ResultMessage(true, ['Logout successful']))
-        }
-        this._loading$$.next(false);
-      })
-    ).subscribe()
+    return this.http.delete('http://localhost:3000/logout')
   }
 
   register(user: { name: string, email: string, password: string }): void {
-    this._loading$$.next(true);
+    //this._loading$$.next(true);
 
     // @TODO refactor to this ->
     // this.userService.registerUser(user).subscribe((result: ResultMessage) => {
@@ -74,32 +65,32 @@ export class AuthService {
     //   this._loading$$.next(false);
     // })
 
-    this.userService.registerUser(user).subscribe({
-      next: success => {
-        console.log(success)
-        this._resultMessage$$.next(new ResultMessage(true, [success]))
-        this._loading$$.next(false);
-      },
-      error: err => {
-        console.log(err)
-        this._resultMessage$$.next(new ResultMessage(false, err.errors))
-        this._loading$$.next(false);
-      }
-    })
+    // this.userService.registerUser(user).subscribe({
+    //   next: success => {
+    //     console.log(success)
+    //     this._resultMessage$$.next(new ResultMessage(true, [success]))
+    //     this._loading$$.next(false);
+    //   },
+    //   error: err => {
+    //     console.log(err)
+    //     this._resultMessage$$.next(new ResultMessage(false, err.errors))
+    //     this._loading$$.next(false);
+    //   }
+    // })
   }
 
   private initUserSession() {
-    let token: string | null = sessionStorage.getItem('token');
-    if (token) {
-      this.userStoreService.setUserSession().subscribe({
-        next: () => {
-          this._authorized$$.next(true);
-        },
-        error: (error) => {
-          console.log(error)
-          this._resultMessage$$.next(new ResultMessage(false, error.errors))
-        },
-      })
-    }
+    // let token: string | null = sessionStorage.getItem('token');
+    // if (token) {
+    //   this.userStoreService.setUserSession().subscribe({
+    //     next: () => {
+    //       this._authorized$$.next(true);
+    //     },
+    //     error: (error) => {
+    //       console.log(error)
+    //       this._resultMessage$$.next(new ResultMessage(false, error.errors))
+    //     },
+    //   })
+    // }
   }
 }
