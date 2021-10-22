@@ -12,7 +12,6 @@ import {
 } from '@angular/router';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError, map} from "rxjs/operators";
-import {UserStoreService} from "../../user/user-store.service";
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../../user/user.service";
 
@@ -20,8 +19,7 @@ import {UserService} from "../../user/user.service";
   providedIn: 'root'
 })
 export class AuthorizedGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private userStoreService: UserStoreService,
-              private authService: AuthService,
+  constructor(private authService: AuthService,
               private userService: UserService,
               private router: Router) {
   }

@@ -23,6 +23,7 @@ import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "../app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "../auth/auth.module";
+import {ReactiveComponentModule} from "@ngrx/component";
 
 // @TODO: It would be nice to find a solution not to use type 'any' here
 const components: any[] = [
@@ -51,7 +52,8 @@ const components: any[] = [
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveComponentModule
   ],
   exports: components,
   providers: [],

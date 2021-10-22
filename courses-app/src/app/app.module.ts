@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
+import {ReactiveComponentModule} from '@ngrx/component';
 import {AppRoutingModule} from './app-routing.module';
 import {CoursesModule} from './features/courses/courses.module';
 
@@ -10,6 +10,10 @@ import {WelcomeComponent} from './features/welcome/welcome/welcome.component';
 import {AuthorizedGuard} from "./auth/guards/authorized.guard";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthTokenInterceptor} from "./auth/auth-token-interceptor";
+import {StoreModule} from "@ngrx/store";
+
+import * as fromApp from './store/app.reducer';
+import {EffectsModule} from "@ngrx/effects";
 
 @NgModule({
   declarations: [
@@ -18,9 +22,12 @@ import {AuthTokenInterceptor} from "./auth/auth-token-interceptor";
   ],
   imports: [
     BrowserModule,
+    ReactiveComponentModule,
     AppRoutingModule,
     CoursesModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([...fromApp.appEffects])
   ],
   providers: [
     AuthorizedGuard,

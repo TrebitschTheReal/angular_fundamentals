@@ -4,6 +4,7 @@ import {validEmailValidator} from "../../shared/validators/email-validation-logi
 import {AuthService} from "../../auth/services/auth.service";
 import {ResultMessage} from "../../shared/models/result-message-model";
 import {Subscription} from "rxjs";
+import {AuthStateFacade} from "../../auth/store/auth.facade";
 
 @Component({
   selector: 'app-registration',
@@ -25,7 +26,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   private isLoadingSubscription: Subscription | undefined;
   private resultMessagesSubscription: Subscription | undefined;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, public authState: AuthStateFacade) {
   }
 
   ngOnInit(): void {
@@ -57,7 +58,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       password: this.registrationForm.get('registrationData.password')?.value
     }
 
-    this.authService.register(newUser);
+    this.authState.register(newUser);
+    //this.authService.register(newUser);
   }
 
   ngOnDestroy() {

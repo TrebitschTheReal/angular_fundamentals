@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../auth/services/auth.service";
-import {UserStoreService} from "../../../user/user-store.service";
+import {UserStateFacade} from "../../../user/store/user.facade";
+import {AuthStateFacade} from "../../../auth/store/auth.facade";
 
 @Component({
   selector: 'app-welcome',
@@ -8,22 +8,11 @@ import {UserStoreService} from "../../../user/user-store.service";
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  isAuthorized: boolean = false;
-  userName: string | undefined;
-  userRole: string | undefined;
 
-  constructor(private authService: AuthService, private userStoreService: UserStoreService) {
-    this.authService.isAuthorized$.subscribe(isAuthorized => {
-      this.isAuthorized = isAuthorized;
-    })
-
-    this.userStoreService.user$.subscribe(user => {
-      this.userName = user?.name;
-      this.userRole = user?.role;
-    })
+  constructor(public authStateFacade: AuthStateFacade,
+              public userStateFacade: UserStateFacade) {
   }
 
   ngOnInit(): void {
   }
-
 }

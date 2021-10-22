@@ -1,3 +1,5 @@
 <div class="m-5 mx-auto text-center">
-  <h1>Welcome <span>{{isAuthorized ? userName + ' - ' + userRole : 'Guest'}}</span></h1>
+  <h1>Welcome
+    <span>{{(authStateFacade.$isAuthorized | ngrxPush) ? (userStateFacade.$name | ngrxPush) + ' - ' + (userStateFacade.$role | ngrxPush) : 'Guest'}}</span>
+  </h1>
 </div>

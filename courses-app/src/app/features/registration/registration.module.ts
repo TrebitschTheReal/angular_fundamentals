@@ -4,6 +4,7 @@ import {RegistrationComponent} from './registration.component';
 import {SharedModule} from "../../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "../../app-routing.module";
+import {ReactiveComponentModule} from "@ngrx/component";
 
 
 @NgModule({
@@ -13,12 +14,13 @@ import {AppRoutingModule} from "../../app-routing.module";
   exports: [
     RegistrationComponent
   ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        ReactiveFormsModule,
-        AppRoutingModule
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    ReactiveComponentModule
+  ]
 })
 export class RegistrationModule {
 }
