@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {SessionStorageService} from "./session-storage.service";
-import {UserStoreService} from "../../user/user-store.service";
-import {Router} from "@angular/router";
-import {UserService} from "../../user/user.service";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ResultMessage} from "../../shared/models/result-message-model";
+import {catchError, map} from "rxjs/operators";
+
+interface ISignInResponse {
+  result: string,
+  successful: boolean,
+  user: { email: string, name: string }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,78 +22,37 @@ export class AuthService {
   private readonly _loading$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly isLoading$: Observable<boolean> = this._loading$$.asObservable();
 
-  constructor(private http: HttpClient,
-              private sessionStorageService: SessionStorageService,
-              private userStoreService: UserStoreService,
-              private userService: UserService,
-              private router: Router) {
-    this.initUserSession();
+  constructor(private http: HttpClient) {
   }
 
-  login(user: { email: string, password: string }): void {
-    // this._loading$$.next(true);
-    //
-    // this.userStoreService.signInAndSetUserSession(user)
-    //   .subscribe({
-    //     next: (resultLoginPack: any) => {
-    //       console.log('Result loginPack in auth service: ', resultLoginPack)
-    //       this._authorized$$.next(true);
-    //       this._resultMessage$$.next(new ResultMessage(true, ['Login success']))
-    //       this._loading$$.next(false);
-    //     },
-    //     error: err => {
-    //       console.log('Error login at subscribe - auth-service', err)
-    //       this._resultMessage$$.next(new ResultMessage(false, err))
-    //       this._loading$$.next(false);
-    //     }
-    //   })
+  public login(user: { email: string, password: string }): Observable<string> {
+    return this.http.post<ISignInResponse>('http://localhost:3000/login', user)
+      .pipe(
+        map((result: ISignInResponse) => {
+          return result.result;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return throwError([error.error.error])
+        }),
+      )
+  }
+
+  public register(user: { name: string, email: string, password: string }): Observable<string> {
+    return this.http
+      .post<{ successful: boolean, result: string }>('http://localhost:3000/register', user)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log('pure error: ', error.error)
+          return throwError(error.error)
+        }),
+        map(((next: any) => {
+          console.log('pure next: ', next)
+          return next.result
+        }))
+      )
   }
 
   logout(withMessage?: boolean): Observable<any> {
-    // this._loading$$.next(true);
-    //
-    // this._authorized$$.next(false);
-    // this.userStoreService.deleteUserState();
-    // this.router.navigate(['/login'])
-
     return this.http.delete('http://localhost:3000/logout')
-  }
-
-  register(user: { name: string, email: string, password: string }): void {
-    //this._loading$$.next(true);
-
-    // @TODO refactor to this ->
-    // this.userService.registerUser(user).subscribe((result: ResultMessage) => {
-    //   this._resultMessage$$.next(new ResultMessage(result.successful, result.messages))
-    //   this._loading$$.next(false);
-    // })
-
-    // this.userService.registerUser(user).subscribe({
-    //   next: success => {
-    //     console.log(success)
-    //     this._resultMessage$$.next(new ResultMessage(true, [success]))
-    //     this._loading$$.next(false);
-    //   },
-    //   error: err => {
-    //     console.log(err)
-    //     this._resultMessage$$.next(new ResultMessage(false, err.errors))
-    //     this._loading$$.next(false);
-    //   }
-    // })
-  }
-
-  private initUserSession() {
-    // let token: string | null = sessionStorage.getItem('token');
-    // if (token) {
-    //   this.userStoreService.setUserSession().subscribe({
-    //     next: () => {
-    //       this._authorized$$.next(true);
-    //     },
-    //     error: (error) => {
-    //       console.log(error)
-    //       this._resultMessage$$.next(new ResultMessage(false, error.errors))
-    //     },
-    //   })
-    // }
   }
 }

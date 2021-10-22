@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Course} from '../../shared/models/course.model';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesStoreService} from "./services/courses-store.service";
-import {AuthService} from "../../auth/services/auth.service";
-import {UserStoreService} from "../../user/user-store.service";
 import {Subscription} from "rxjs";
+import {AuthStateFacade} from "../../auth/store/auth.facade";
+import {UserStateFacade} from "../../user/store/user.facade";
 
 @Component({
   selector: 'app-courses',
@@ -15,8 +15,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public courses: Course[] = [];
   public modalShow: boolean = false;
   public isLoading: boolean = false;
-  public isAuthorized: boolean = false;
-  public isAdmin: boolean = false;
 
   private isAuthorizedSubscription: Subscription | undefined;
   private isAdminSubscription: Subscription | undefined;
@@ -27,20 +25,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
   constructor(public route: ActivatedRoute,
               private router: Router,
               private coursesStoreService: CoursesStoreService,
-              private userStoreService: UserStoreService,
-              private authService: AuthService) {
+              public authStateFacade: AuthStateFacade,
+              public userStateFacade: UserStateFacade) {
   }
 
   ngOnInit(): void {
     this.coursesStoreService.getAllCourses();
-
-    this.isAuthorizedSubscription = this.authService.isAuthorized$.subscribe(isAuthorized => {
-      this.isAuthorized = isAuthorized;
-    })
-
-    this.isAdminSubscription = this.userStoreService.isAdmin$.subscribe((isAdmin: boolean) => {
-      this.isAdmin = isAdmin;
-    })
 
     this.isLoadingSubscription = this.coursesStoreService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading

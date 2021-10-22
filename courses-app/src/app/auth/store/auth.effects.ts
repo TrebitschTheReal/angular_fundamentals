@@ -5,7 +5,6 @@ import {of} from "rxjs";
 import * as AuthActions from '../store/auth.actions';
 import * as fromApp from "../../store/app.reducer";
 import {AuthService} from "../services/auth.service";
-import {UserService} from "../../user/user.service";
 import * as UserActions from "./../../user/store/user.actions";
 import {Store} from "@ngrx/store";
 import {SessionStorageService} from "../services/session-storage.service";
@@ -31,7 +30,7 @@ export class AuthEffects {
 
   login$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.REQUEST_LOGIN_START),
-    switchMap((authData: AuthActions.RequestLoginStart) => this.userService.login({
+    switchMap((authData: AuthActions.RequestLoginStart) => this.authService.login({
       email: authData.payload.email,
       password: authData.payload.password
     }).pipe(
@@ -60,7 +59,7 @@ export class AuthEffects {
 
   register$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.REQUEST_REGISTER_START),
-    switchMap((authData: AuthActions.RequestRegisterStart) => this.userService.registerUser({
+    switchMap((authData: AuthActions.RequestRegisterStart) => this.authService.register({
       name: authData.payload.name,
       email: authData.payload.email,
       password: authData.payload.password
@@ -102,7 +101,6 @@ export class AuthEffects {
     private store: Store<fromApp.AppState>,
     private router: Router,
     private sessionStorageService: SessionStorageService,
-    private userService: UserService
   ) {
   }
 }

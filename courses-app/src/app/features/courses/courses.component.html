@@ -3,7 +3,7 @@
   <app-search (searchButtonClicked)="onSearchButtonClicked($event)"
               [placeholder]="'Type something'"
   ></app-search>
-  <app-button *ngIf="isAdmin && courses.length"
+  <app-button *ngIf="(userStateFacade.$isAdmin | async)  && courses.length"
               [buttonText]="'Add new course'"
               [routerLink]="['new']"
 
