@@ -12,7 +12,6 @@ export const REQUEST_LOGOUT_SUCCESS = '[Auth] Request Logout Success';
 export const REQUEST_LOGOUT_FAIL = '[Auth] Request Logout Fail';
 export const REQUEST_AUTO_LOGIN_START = '[Auth] Request Auto Login Start';
 export const REQUEST_AUTO_LOGIN_SUCCESS = '[Auth] Request Auto Login Success';
-export const REQUEST_AUTO_LOGIN_FAIL = '[Auth] Request Auto Login Fail';
 
 export class RequestLoginStart implements Action {
   readonly type = REQUEST_LOGIN_START;
@@ -37,7 +36,7 @@ export class RequestLoginFail implements Action {
 
   constructor(
     public payload: {
-      errors: string[]
+      errors: string[],
     }
   ) {
   }
@@ -65,7 +64,7 @@ export class RequestRegisterFail implements Action {
 
   constructor(
     public payload: {
-      errors: string[]
+      errors: string[],
     }
   ) {
   }
@@ -107,10 +106,6 @@ export class RequestAutoLoginSuccess implements Action {
   readonly type = REQUEST_AUTO_LOGIN_SUCCESS;
 }
 
-export class RequestAutoLoginFail implements Action {
-  readonly type = REQUEST_AUTO_LOGIN_FAIL;
-}
-
 export type AuthActions =
   | RequestLoginStart
   | RequestLoginSuccess
@@ -124,4 +119,3 @@ export type AuthActions =
   | RequestLogoutFail
   | RequestAutoLoginStart
   | RequestAutoLoginSuccess
-  | RequestAutoLoginFail

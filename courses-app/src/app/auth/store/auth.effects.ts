@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap} from "rxjs/operators";
+import {catchError, finalize, map, switchMap, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import * as AuthActions from '../store/auth.actions';
 import * as fromApp from "../../store/app.reducer";
@@ -13,101 +13,88 @@ import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
-  // @TODO fix this
   autoLogin$ = createEffect(() => this.actions$.pipe(
-    ofType(AuthActions.REQUEST_AUTO_LOGIN_START),
-    switchMap(_ => of(new UserActions.RequestCurrentUserStart())
-      .pipe(
-        map(action => {
-          this.store.dispatch(action)
-          this.router.navigate(['/courses'])
-          return new AuthActions.RequestAutoLoginSuccess();
-        }),
-        catchError(error => {
-          return of(new AuthActions.RequestAutoLoginFail());
-        })
-      )
-    ))
+      ofType(AuthActions.REQUEST_AUTO_LOGIN_START),
+      switchMap((_) => [
+        new UserActions.RequestCurrentUserStart(),
+        new AuthActions.RequestAutoLoginSuccess(),
+      ]),
+      tap(_ => {
+        this.router.navigate(['/courses'])
+      }),
+      catchError((errors: string[]) => {
+          return of(new AuthActions.RequestLoginFail({errors: errors}));
+        }
+      ),
+    )
   );
 
   login$ = createEffect(() => this.actions$.pipe(
-      ofType(AuthActions.REQUEST_LOGIN_START),
-      switchMap((authData: AuthActions.RequestLoginStart) => this.userService.login({
-        email: authData.payload.email,
-        password: authData.payload.password
-      })
-        .pipe(
-          map((token: string) => {
-              this.sessionStorageService.token = token;
-              this.store.dispatch(new UserActions.RequestCurrentUserStart())
-              this.router.navigate(['/courses'])
-              return new AuthActions.RequestLoginSuccess({token: token})
-            }
-          ),
-          catchError((errors: string[]) => {
-              console.log(errors)
-              return of(new AuthActions.RequestLoginFail({errors: errors}));
-            }
-          )
-        ))
-    )
-  );
+    ofType(AuthActions.REQUEST_LOGIN_START),
+    switchMap((authData: AuthActions.RequestLoginStart) => this.userService.login({
+      email: authData.payload.email,
+      password: authData.payload.password
+    }).pipe(
+      // If success..
+      tap((token: string) => {
+        this.sessionStorageService.token = token;
+      }),
+      // We would like to fire multiple actions if the outer (main) action was success
+      // no need to use forkJoin here, to get access the inner pipe: we dont even want to access it. Why?
+      // we are firing actions: handled requests with a complete choreography -> no need to interfere
+      // if we would like to fire a service method (so technically a not registered, not handled "action"),
+      // we can use forkJoin, because those result are not handled anywhere yet
+      switchMap((token: string) => [
+        new UserActions.RequestCurrentUserStart(),
+        new AuthActions.RequestLoginSuccess({token: token}),
+      ]),
+      tap(_ => {
+        this.router.navigate(['/courses'])
+      }),
+      // Else...
+      catchError((errors: string[]) => {
+          return of(new AuthActions.RequestLoginFail({errors: errors}));
+        }
+      ),
+    ))));
 
   register$ = createEffect(() => this.actions$.pipe(
-      ofType(AuthActions.REQUEST_REGISTER_START),
-      switchMap((authData: AuthActions.RequestRegisterStart) => this.userService.registerUser({
-        name: authData.payload.name,
-        email: authData.payload.email,
-        password: authData.payload.password
-      })
-        .pipe(
-          map((result: string) => {
-              console.log(result)
-              console.log(result)
-              console.log(result)
-              console.log(result)
-              this.router.navigate(['/courses']);
-              this.store.dispatch(new UserActions.RequestCurrentUserStart());
-              return new AuthActions.RequestRegisterSuccess({result: result})
-            }
-          ),
-          catchError((result: { successful: boolean, errors: string[] }) => {
-              console.log(result.errors);
-              console.log(result.errors);
-              console.log(result.errors);
-              return of(new AuthActions.RequestRegisterFail({errors: result.errors}));
-            }
-          )
-        ))
-    )
-  );
+    ofType(AuthActions.REQUEST_REGISTER_START),
+    switchMap((authData: AuthActions.RequestRegisterStart) => this.userService.registerUser({
+      name: authData.payload.name,
+      email: authData.payload.email,
+      password: authData.payload.password
+    }).pipe(
+      // If success..
+      tap(_ => this.router.navigate(['/login'])),
+      map((result: string) => new AuthActions.RequestRegisterSuccess({result: result})),
+      // Else..
+      catchError((result: { successful: boolean, errors: string[] }) => {
+          return of(new AuthActions.RequestRegisterFail({errors: result.errors}));
+        }
+      )
+    )),
+  ));
 
   logout$ = createEffect(() => this.actions$.pipe(
       ofType(AuthActions.REQUEST_LOGOUT_START),
       switchMap((_) => this.authService.logout()
         .pipe(
-          map((result: string) => {
-              console.log(result)
-              console.log(result)
-              console.log(result)
-              console.log(result)
-              this.sessionStorageService.deleteToken();
-              this.router.navigate(['/login']);
-              return new AuthActions.RequestLogoutSuccess({result: 'Logout successful'})
-            }
-          ),
+          // No matter the outcome of the request -> we must do things anyway
+          // we must reset the token, and force navigate outside the inner pages
+          // (the guards will handle the rest)
+          finalize(() => {
+            this.sessionStorageService.deleteToken();
+            this.router.navigate(['/login']);
+          }),
+          map(_ => new AuthActions.RequestLogoutSuccess({result: 'Logout successful'})),
           catchError((result: { successful: boolean, errors: string[] }) => {
-              console.log(result.errors);
-              console.log(result.errors);
-              console.log(result.errors);
-              this.sessionStorageService.deleteToken();
               return of(new AuthActions.RequestLogoutFail({errors: result.errors}));
             }
           )
         ))
     )
   );
-
 
   constructor(
     private actions$: Actions,

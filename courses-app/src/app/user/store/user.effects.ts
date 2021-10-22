@@ -14,10 +14,7 @@ export class UserEffects {
       ofType(UserActions.REQUEST_CURRENT_USER_START),
       switchMap(() => this.userService.fetchUser()
         .pipe(
-          map((user: User) => {
-              return new UserActions.RequestCurrentUserSuccess({user: user})
-            }
-          ),
+          map((user: User) => new UserActions.RequestCurrentUserSuccess({user: user})),
           catchError((errors: string[]) => {
               return of(new UserActions.RequestCurrentUserFail({errors: errors}));
             }

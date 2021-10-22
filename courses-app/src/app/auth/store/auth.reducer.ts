@@ -37,7 +37,8 @@ export function authReducer(
       return {
         ...state,
         errors: action.payload.errors,
-        isLoading: false
+        isLoading: false,
+        isAuthorized: false,
       };
     case AuthActions.REQUEST_REGISTER_START:
       return {
@@ -85,12 +86,6 @@ export function authReducer(
         ...state,
         isLoading: false,
         isAuthorized: true,
-      };
-    case AuthActions.REQUEST_AUTO_LOGIN_FAIL:
-      return {
-        ...state,
-        isLoading: false,
-        isAuthorized: false,
       };
     default:
       return state;
