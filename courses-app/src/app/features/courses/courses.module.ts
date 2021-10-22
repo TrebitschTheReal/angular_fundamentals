@@ -10,7 +10,7 @@ import {CourseListComponent} from './course-list/course-list.component';
 import {LoginModule} from "../login/login.module";
 import {RegistrationModule} from "../registration/registration.module";
 import {AppRoutingModule} from "../../app-routing.module";
-import {AuthorsStoreService} from "../../shared/services/authors/authors-store.service";
+import {ReactiveComponentModule} from "@ngrx/component";
 
 
 @NgModule({
@@ -25,7 +25,8 @@ import {AuthorsStoreService} from "../../shared/services/authors/authors-store.s
     CommonModule,
     CourseModule,
     LoginModule,
-    RegistrationModule
+    RegistrationModule,
+    ReactiveComponentModule
   ],
   exports: [
     CoursesComponent,

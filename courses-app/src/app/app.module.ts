@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
+import {ReactiveComponentModule} from '@ngrx/component';
 import {AppRoutingModule} from './app-routing.module';
 import {CoursesModule} from './features/courses/courses.module';
 
@@ -22,6 +22,7 @@ import {EffectsModule} from "@ngrx/effects";
   ],
   imports: [
     BrowserModule,
+    ReactiveComponentModule,
     AppRoutingModule,
     CoursesModule,
     SharedModule,
